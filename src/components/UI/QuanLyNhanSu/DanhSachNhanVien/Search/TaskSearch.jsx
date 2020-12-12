@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-import { Select } from 'antd';
-import './TaskSelect.scss';
+import './TaskSearch.scss';
+import { Input, Select } from 'antd';
 
+const { Search } = Input;
 const { Option, OptGroup } = Select;
 
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
-class TaskSelect extends Component {
-  render() {
-    return (
+const TaskSearch = ({ onSearch, handleChange }) => {
+  return (
+    <>
       <Select
         defaultValue='Danh Mục'
         style={{ width: 150, marginLeft: 100, height: 40 }}
@@ -19,13 +16,20 @@ class TaskSelect extends Component {
       >
         <OptGroup label='Loại'>
           <Option value='hoten'>Họ Tên</Option>
-          <Option value='tuoi'>Tuổi</Option>
+          <Option value='diachi'>Địa Chỉ</Option>
         </OptGroup>
         {/* <OptGroup label='Giám Đốc'>
           <Option value='Yiminghe'>yiminghe</Option>
         </OptGroup> */}
       </Select>
-    );
-  }
-}
-export default TaskSelect;
+      <Search
+        placeholder='Tìm kiếm'
+        onSearch={onSearch}
+        enterButton
+        className='search-custom'
+        style={{ width: 300 }}
+      />
+    </>
+  );
+};
+export default TaskSearch;

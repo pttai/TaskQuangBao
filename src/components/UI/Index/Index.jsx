@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Layout } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import SiderMenu from './SiderMenu';
-import Charts from './Charts';
+import SiderMenu from '../SiderMenu/SiderMenu';
+import Charts from '../Admin/Charts/Charts';
 import { Route, Switch } from 'react-router';
-import TaskListStaff from './TaskListStaff';
+import ListStaff from '../QuanLyNhanSu/DanhSachNhanVien/ListStaff/ListStaff';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -59,7 +59,7 @@ class Index extends Component {
           collapsed={collapsed}
           onCollapse={this.onCollapse}
           width={280}
-          collapsedWidth={100}
+          collapsedWidth={80}
           className='Sider-custom'
         >
           <SiderMenu />
@@ -100,10 +100,7 @@ class Index extends Component {
                   </div>
                 )}
               />
-              <Route
-                path='/admin/danh-sach-nhan-vien'
-                component={TaskListStaff}
-              />
+              <Route path='/admin/danh-sach-nhan-vien' component={ListStaff} />
             </Switch>
             <Layout>
               <Footer style={{ textAlign: 'center' }}>

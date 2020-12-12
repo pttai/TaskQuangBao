@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import 'antd/dist/antd.css';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
-import FormAdd from './FormAdd';
+import FormAdd from '../FormAdd/FormAdd';
 
 const TaskAdd = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);

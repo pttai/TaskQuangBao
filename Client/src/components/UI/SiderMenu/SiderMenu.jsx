@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
-import { Menu } from 'antd';
-import SubMenu from 'antd/lib/menu/SubMenu';
 import './SiderMenu.scss';
 import {
   DesktopOutlined,
@@ -11,6 +9,8 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { Menu } from 'antd';
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 const SiderMenu = (props) => {
   return (
@@ -24,7 +24,7 @@ const SiderMenu = (props) => {
         key='20'
         style={{
           fontSize: 30,
-          color: 'white',
+          // color: 'white',
           fontWeight: 'bold',
           marginBottom: 10,
           height: 60,
@@ -39,7 +39,7 @@ const SiderMenu = (props) => {
           QUANGBAO
         </Link>
       </Menu.Item>
-      <Menu.SubMenu
+      <SubMenu
         key='sub1'
         icon={<PieChartOutlined />}
         title='Quản Lý Nhân Sự'
@@ -53,7 +53,7 @@ const SiderMenu = (props) => {
         <Menu.Item key='4'> Nhật Ký Làm Việc</Menu.Item>
         <Menu.Item key='5'> Lương</Menu.Item>
         <Menu.Item key='6'>Tuyển Dụng</Menu.Item>
-      </Menu.SubMenu>
+      </SubMenu>
       <SubMenu key='sub2' icon={<DesktopOutlined />} title='Quản Lý Sản Xuất'>
         <Menu.Item key='7'>Mặt Hàng</Menu.Item>
         <Menu.Item key='8'>Đối Tác,Khách Hàng</Menu.Item>

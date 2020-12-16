@@ -5,7 +5,6 @@ import "./index.scss";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import Swal from 'sweetalert2';
-import  { Redirect } from 'react-router-dom'
 const layout = {
   labelCol: {
     span: 8,

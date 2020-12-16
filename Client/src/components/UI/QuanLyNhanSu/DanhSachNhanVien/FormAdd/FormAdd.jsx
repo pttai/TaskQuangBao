@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-import { Form, Input, InputNumber, Button } from 'antd';
+import moment from 'moment';
+
+import { Form, Input, InputNumber, Button, Select, DatePicker } from 'antd';
 const layout = {
   labelCol: {
     span: 8,
@@ -22,7 +23,7 @@ const validateMessages = {
 const onFinish = (values) => {
   console.log(values);
 };
-
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 class FormAdd extends Component {
   // constructor(props) {
   //   super(props);
@@ -67,24 +68,23 @@ class FormAdd extends Component {
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name={['user', 'tuoi']}
-            label='Tuổi'
-            rules={[
-              {
-                type: 'number',
-                min: 0,
-                max: 99,
-              },
-            ]}
-          >
-            <InputNumber />
+          <Form.Item name={['user', 'ngaysinh']} label='Ngày Sinh'>
+            <DatePicker
+              defaultValue={moment('01/01/2015', dateFormatList[0])}
+              format={dateFormatList}
+            />
           </Form.Item>
           <Form.Item name={['user', 'loainhanvien']} label='Loại Nhân Viên'>
-            <Input />
+            <Select>
+              <Select.Option value='chinhthuc'>Chính Thức</Select.Option>
+              <Select.Option value='tamthoi'>Tạm Thời</Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item name={['user', 'vitri']} label='Vị Trí'>
-            <Input />
+            <Select placeholder='Select one'>
+              <Select.Option value='giamdoc'>Giám Đốc</Select.Option>
+              <Select.Option value='quanly'>Quản Lý</Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item name={['user', 'sodienthoai']} label='Số Điện Thoại'>
             <Input />
@@ -92,18 +92,25 @@ class FormAdd extends Component {
           <Form.Item name={['user', 'thamnien']} label='Thăm Niên'>
             <Input />
           </Form.Item>
-          <Form.Item name={['user', 'ngaynghi']} label='Ngày Nghỉ'>
-            <Input />
+          <Form.Item
+            name={['user', 'ngaynghi']}
+            label='Ngày Nghỉ'
+            rules={[
+              {
+                type: 'number',
+                min: 0,
+                max: 30,
+              },
+            ]}
+          >
+            <InputNumber />
           </Form.Item>
           <Form.Item name={['user', 'noidung']} label='Nội Dung'>
-            <Input />
-          </Form.Item>
-          <Form.Item name={['user', 'vitri']} label='Vị Trí'>
             <Input.TextArea />
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
             <Button type='primary' htmlType='submit'>
-              Submit
+              Đồng ý
             </Button>
           </Form.Item>
         </Form>

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './TaskSearch.scss';
+import './Search.scss';
 import { Input, Select } from 'antd';
 
-const { Search } = Input;
 const { Option, OptGroup } = Select;
 
-const TaskSearch = ({ onSearch, handleChange }) => {
+const Search = ({ onChange, handleChange }) => {
   return (
     <>
       <Select
@@ -22,9 +21,9 @@ const TaskSearch = ({ onSearch, handleChange }) => {
           <Option value='Yiminghe'>yiminghe</Option>
         </OptGroup> */}
       </Select>
-      <Search
+      <Input
         placeholder='Tìm kiếm'
-        onSearch={onSearch}
+        onChange={onChange}
         enterButton
         className='search-custom'
         style={{ width: 300 }}
@@ -32,4 +31,4 @@ const TaskSearch = ({ onSearch, handleChange }) => {
     </>
   );
 };
-export default TaskSearch;
+export default Search;

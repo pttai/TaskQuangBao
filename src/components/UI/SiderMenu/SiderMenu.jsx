@@ -39,22 +39,7 @@ const SiderMenu = (props) => {
           QUANGBAO
         </Link>
       </Menu.Item>
-      <SubMenu
-        key='sub1'
-        icon={<PieChartOutlined />}
-        title='Quản Lý Nhân Sự'
-        defaultSelectedKeys={[]}
-      >
-        <Menu.Item key='1'>
-          <Link to='/admin/danh-sach-nhan-vien'>Danh Sách Nhân Viên</Link>
-        </Menu.Item>
-        <Menu.Item key='2'> Năng Lực Nhân Viên</Menu.Item>
-        <Menu.Item key='3'>Hồ Sơ Nhân Viên</Menu.Item>
-        <Menu.Item key='4'> Nhật Ký Làm Việc</Menu.Item>
-        <Menu.Item key='5'> Lương</Menu.Item>
-        <Menu.Item key='6'>Tuyển Dụng</Menu.Item>
-      </SubMenu>
-      <SubMenu key='sub2' icon={<DesktopOutlined />} title='Quản Lý Sản Xuất'>
+      <SubMenu key='sub2' icon={<DesktopOutlined />} title='Sản Xuất'>
         <Menu.Item key='7'>Mặt Hàng</Menu.Item>
         <Menu.Item key='8'>Đối Tác,Khách Hàng</Menu.Item>
         <Menu.Item key='9'>Nhà Cung Cấp</Menu.Item>
@@ -62,6 +47,23 @@ const SiderMenu = (props) => {
         <Menu.Item key='11'>Sản Phẩm Lỗi</Menu.Item>
         <Menu.Item key='12'>Thanh Toán,Công Nợ</Menu.Item>
         <Menu.Item key='13'>Kho</Menu.Item>
+      </SubMenu>
+      <SubMenu
+        key='sub1'
+        icon={<PieChartOutlined />}
+        title='Nhân Sự'
+        defaultSelectedKeys={[]}
+      >
+        <Menu.Item key='1'>
+          <Link to='/admin/ho-so-nhan-su'>Hồ Sơ Nhân Sự</Link>
+        </Menu.Item>
+        <Menu.Item key='2'>
+          <Link to='/admin/ho-so-xin-viec'>Hồ Sơ Xin Việc</Link>
+        </Menu.Item>
+        <Menu.Item key='3'>Hồ Sơ Nhân Viên</Menu.Item>
+        <Menu.Item key='4'> Nhật Ký Làm Việc</Menu.Item>
+        <Menu.Item key='5'> Lương</Menu.Item>
+        <Menu.Item key='6'>Tuyển Dụng</Menu.Item>
       </SubMenu>
       <SubMenu key='sub3' icon={<UserOutlined />} title='User'>
         <Menu.Item key='14'>Tom</Menu.Item>

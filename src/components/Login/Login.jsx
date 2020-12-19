@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css';
+import './Login.scss';
 import { Form, Input, Button, Checkbox, Card, Row, Col } from 'antd';
 
 import { Link } from 'react-router-dom';
@@ -18,14 +19,23 @@ const tailLayout = {
     span: 16,
   },
 };
+const adminUser = {
+  username: 'phantantai',
+  password: 'admin123',
+};
 
 const Login = (props) => {
   const { history } = props;
   const onFinish = (values) => {
-    if (values) {
+    if (
+      values.username == adminUser.username &&
+      values.password == adminUser.password
+    ) {
       history.replace('/admin');
+      console.log('Success:', values);
+    } else {
+      onFinishFailed('');
     }
-    console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -60,8 +70,10 @@ const Login = (props) => {
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
+          style={{ marginRight: 40 }}
         >
           <Form.Item
+            className='form_item'
             label='Username'
             name='username'
             rules={[
@@ -75,6 +87,7 @@ const Login = (props) => {
           </Form.Item>
 
           <Form.Item
+            className='form_item'
             label='Password'
             name='password'
             rules={[
@@ -101,7 +114,7 @@ const Login = (props) => {
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Col xs={12}>
-              <Button type='primary' htmlType='submit'>
+              <Button type='primary' htmlType='submit' style={{ width: 180 }}>
                 Login
               </Button>
             </Col>

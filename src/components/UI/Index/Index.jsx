@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Layout } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Dropdown, Layout, Avatar, Menu } from 'antd';
 import SiderMenu from '../SiderMenu/SiderMenu';
 import Charts from '../Admin/Charts/Charts';
 import { Route, Switch } from 'react-router';
-import ListStaff from '../QuanLyNhanSu/DanhSachNhanVien/ListStaff/ListStaff';
+import ListStaff from '../NhanSu/HoSoNhanSu/ListStaff/ListStaff';
+import {
+  AntDesignOutlined,
+  EditOutlined,
+  LogoutOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const { Header, Content, Footer, Sider } = Layout;
+
+const menu = (
+  <Menu>
+    <Menu.Item key='1' icon={<EditOutlined />}>
+      Thiết lập
+    </Menu.Item>
+    <Menu.Item key='2' icon={<UserOutlined />}>
+      phantantai
+    </Menu.Item>
+    <Menu.Item key='3' icon={<LogoutOutlined />}>
+      <Link to='/'>Đăng xuất</Link>
+    </Menu.Item>
+  </Menu>
+);
 
 class Index extends Component {
   constructor(props) {
@@ -75,12 +95,9 @@ class Index extends Component {
               backgroundColor: 'white',
             }}
           >
-            <Avatar
-              style={{
-                marginLeft: 20,
-              }}
-              size={50}
-            />
+            <Dropdown overlay={menu} placement='bottomCenter'>
+              {<Avatar size='large' icon={<AntDesignOutlined />} />}
+            </Dropdown>
           </Header>
           <Content style={{ margin: '0 50px' }}>
             <Switch>
@@ -100,7 +117,8 @@ class Index extends Component {
                   </div>
                 )}
               />
-              <Route path='/admin/danh-sach-nhan-vien' component={ListStaff} />
+              <Route path='/admin/ho-so-nhan-su' component={ListStaff} />
+              <Route path='/admin/ho-so-xin-viec' />
             </Switch>
             <Layout>
               <Footer style={{ textAlign: 'center' }}>

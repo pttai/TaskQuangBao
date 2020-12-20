@@ -8,6 +8,6 @@ const NhanVienChinhThuc = new mongoose.Schema({
   "trangthai":{
     type: String
   }
-},{collation: "NhanVienChinhThuc"});
+},{collection: "NhanVienChinhThuc"});
 
 module.exports = mongoose.model("NhanVienChinhThuc", NhanVienChinhThuc);

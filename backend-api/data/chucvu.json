@@ -1,0 +1,22 @@
+[
+  {
+    "tenchucvu": "Giám đốc",
+    "tenvitri": "Giám đốc chi nhánh"
+  },
+  {
+    "tenchucvu": "Quản lý",
+    "tenvitri": "Quản lý chi nhánh"
+  },
+  {
+    "tenchucvu": "Nhân viên",
+    "tenvitri": "Nhân viên kỹ thuật"
+  },
+  {
+    "tenchucvu": "Nhân viên",
+    "tenvitri": "Nhân viên kho"
+  },
+  {
+    "tenchucvu": "Nhân viên",
+    "tenvitri": "Nhân viên vận chuyển"
+  }
+]

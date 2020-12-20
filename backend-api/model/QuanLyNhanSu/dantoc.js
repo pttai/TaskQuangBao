@@ -3,6 +3,6 @@ const DanToc = new mongoose.Schema({
   "tendantoc": {
     type: String
   }
-}, {collation: "DanToc"});
+}, {collection: "DanToc"});
 
 module.exports = mongoose.model("DanToc", DanToc);

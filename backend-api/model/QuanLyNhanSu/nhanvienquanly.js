@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const NhanVienQuanLy = new mongoose.Schema({
   "iduser": {
-    type: mongoose.ObjectId
+    type: Schema.Types.ObjectId, ref: 'User'
   },
   "idnhanvienchinhthuc":{
-    type: mongoose.ObjectId
+    type: Schema.Types.ObjectId, ref: 'NhanVienChinhThuc'
   },
   "idchucvu": {
-    type: mongoose.ObjectId
+    type: Schema.Types.ObjectId, ref: 'ChucVu'
   }
-},{collation: "NhanVienQuanLy"})
+},{collection: "NhanVienQuanLy"})
 
 module.exports = mongoose.model("NhanVienQuanLy", NhanVienQuanLy);

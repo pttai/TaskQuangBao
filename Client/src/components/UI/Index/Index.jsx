@@ -100,7 +100,7 @@ class Index extends Component {
                   </div>
                 )}
               />
-              <Route path='/admin/danh-sach-nhan-vien' component={ListStaff} />
+              <Route path='/admin/danh-sach-nhan-vien' exact component={ListStaff} />
             </Switch>
             <Layout>
               <Footer style={{ textAlign: 'center' }}>

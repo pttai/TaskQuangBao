@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const NhanVien = new mongoose.Schema({
   "tennhanvien": {
     type: String,
@@ -20,14 +21,14 @@ const NhanVien = new mongoose.Schema({
     type: String,
   },
   "idnhanvienchinhthuc":{
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId, ref: 'NhanVienChinhThuc',
   },
   "iddantoc":{
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId, ref: 'DanToc',
   },
   "idtrinhdo":{
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId,
   }
-},{collation: "NhanVien"});
+},{timestamps: true, collection: "NhanVien"});
 
 module.exports = mongoose.model("NhanVien", NhanVien);

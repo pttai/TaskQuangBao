@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var cors = require('cors');
 var app = express();
 var mongoose = require('mongoose');
+require('dotenv').config();
 
 app.use(cors());
 // view engine setup
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-mongoose.connect('mongodb://localhost:27017/QuanLyQuangBao', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://root:Quanlyquangbao@cluster0.sqe83.mongodb.net/QuanLyQuangBao', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

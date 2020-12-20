@@ -1,0 +1,13 @@
+﻿[
+  {
+    "tennhanvien": "Nguyễn Thị Bích",
+    "gioitinh": "Nữ",
+    "sdt": "0932423123",
+    "email": "bichnguyen@gmail.com",
+    "ngaysinh": "1986-05-18T16:00:00Z",
+    "quequan": "Bến Tre",
+    "idnhanvienchinhthuc": {"$oid": "5fdd00cecf103522589a2727"},
+    "iddantoc": {"$oid": "5fdcfd25f091941ebcf0cd78"},
+    "idtrinhdo": ""
+  }
+]

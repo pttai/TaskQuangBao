@@ -6,5 +6,5 @@ const ChucVu = new mongoose.Schema({
   "tenvitri": {
     type: String
   }
-},{collation: "ChucVu"});
+},{collection: "ChucVu"});
 module.exports = mongoose.model("ChucVu", ChucVu);

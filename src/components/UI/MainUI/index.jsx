@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import AddStaff from '../NhanSu/HoSoNhanSu/AddStaff/AddStaff';
+import EditStaff from '../NhanSu/HoSoNhanSu/EditStaff/EditStaff';
 
 const { Header, Content, Footer, Sider } = Layout;
 

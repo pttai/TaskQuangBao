@@ -35,6 +35,7 @@ const SiderMenu = (props) => {
           <img
             src='/images/iconQuangBao.png'
             style={{ width: 40, marginRight: 25, marginLeft: -8 }}
+            alt='alt'
           />
           QUANGBAO
         </Link>

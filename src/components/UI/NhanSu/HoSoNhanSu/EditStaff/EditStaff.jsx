@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { FormOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import React from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
-
+import queryString from 'query-string';
 const layout = {
   labelCol: {
     span: 8,
@@ -23,62 +21,42 @@ const validateMessages = {
   },
 };
 
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-
 const EditStaff = (props) => {
-  const { history } = props;
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { id } = queryString.parse(props.location.search);
+  const { index } = props;
   const onFinish = (values) => {
     console.log(values);
     axios({
       method: 'POST',
-      url: 'https://quanlyquangbao.herokuapp.com/api/themnhanvien',
-      data: values,
-    }).then((res) => {
-      history.replace('/admin/ho-so-nhan-su');
+      url: `https://quanlyquangbao.herokuapp.com/api/themnhanvien/${id}`,
+      data: values[`user_${index}`],
+    }).then(() => {
+      props.history.replace('/admin/ho-so-nhan-su');
     });
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
   return (
     <>
-      <Button
-        type='primary'
-        style={{ borderRadius: 7 }}
-        icon={<FormOutlined />}
-        onClick={showModal}
-      ></Button>
       <Modal
         title='Sửa Nhân Viên'
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        visible={props.visible}
+        onOk={props.onOk}
+        onCancel={props.onCancel}
         footer={null}
       >
         <Form
           {...layout}
-          name='nest-messages'
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-          <Form.Item name={['user', 'trangthai']} label='Trạng Thái'>
+          <Form.Item name={[`user-${index}`, 'trangthai']} label='Trạng Thái'>
             <Select>
               <Select.Option value='danghiviec'>Đã nghỉ việc</Select.Option>
               <Select.Option value='danglamviec'>Đang làm việc</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
-            name={['user', 'hoten']}
+            name={[`user-${index}`, 'hoten']}
             label='Họ Tên'
             rules={[
               {
@@ -90,17 +68,20 @@ const EditStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={['user', 'gioitinh']} label='Giới Tính'>
+          <Form.Item name={[`user-${index}`, 'gioitinh']} label='Giới Tính'>
             <Select>
               <Select.Option value='nam'>Nam</Select.Option>
               <Select.Option value='nu'>Nữ</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name={['user', 'sodienthoai']} label='Số Điện Thoại'>
+          <Form.Item
+            name={[`user-${index}`, 'sodienthoai']}
+            label='Số Điện Thoại'
+          >
             <Input />
           </Form.Item>
           <Form.Item
-            name={['user', 'email']}
+            name={[`user-${index}`, 'email']}
             label='Email'
             rules={[
               {
@@ -110,16 +91,13 @@ const EditStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={['user', 'ngaysinh']} label='Ngày Sinh'>
-            <DatePicker
-              defaultValue={moment('01/01/2015', dateFormatList[0])}
-              format={dateFormatList}
-            />
+          <Form.Item name={[`user-${index}`, 'ngaysinh']} label='Ngày Sinh'>
+            <DatePicker />
           </Form.Item>
           <Form.Item
-            name={['user', 'quequan']}
+            name={[`user-${index}`, 'quequan']}
             label='Quê Quán'
-            rules={[{}]}
+
             // value={this.state.name}
             // onChange={this.onChange}
           >

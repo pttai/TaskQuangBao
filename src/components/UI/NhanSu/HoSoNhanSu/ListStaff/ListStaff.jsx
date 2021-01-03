@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Breadcrumb } from 'antd';
+import { Table, Button, Breadcrumb, notification } from 'antd';
 import {
   DeleteOutlined,
+  FormOutlined,
   PlusCircleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -10,10 +11,13 @@ import Search from '../Search/Search';
 import axios from 'axios';
 import { normalizeVNText } from '../../../../../utils/normalizeVNText';
 import EditStaff from '../EditStaff/EditStaff';
+import DetailStaff from '../DetailStaff/DetailStaff';
 import { Link } from 'react-router-dom';
 
 const ListStaff = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [EditVisible, setEditVisible] = useState(false);
+  const [userDetail, setUserDetail] = useState(false);
   const [staffList, setStaffList] = useState([]);
   const [data, setData] = useState([]);
   const [key, setKey] = useState('tennhanvien');
@@ -28,7 +32,7 @@ const ListStaff = (props) => {
       setData(data);
     });
   }, []);
-
+  console.log(staffList);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -39,8 +43,34 @@ const ListStaff = (props) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    props.history.replace('/admin/ho-so-nhan-su');
   };
 
+  const showModalEdit = () => {
+    setEditVisible(true);
+  };
+
+  const handleOkEdit = () => {
+    setEditVisible(false);
+  };
+
+  const handleCancelEdit = () => {
+    setEditVisible(false);
+    props.history.replace('/admin/ho-so-nhan-su');
+  };
+
+  const showModalStaffDetail = () => {
+    setUserDetail(true);
+  };
+
+  const handleOkStaffDetail = () => {
+    setUserDetail(false);
+  };
+
+  const handleCancelStaffDetail = () => {
+    setUserDetail(false);
+    props.history.replace('/admin/ho-so-nhan-su');
+  };
   const onChange = (e) => {
     if (e.target.value.trim().match(/\\/g)) return;
     const keyword = e.target.value.trim();
@@ -119,21 +149,65 @@ const ListStaff = (props) => {
       dataIndex: 'tuychinh',
       key: 'tuychinh',
 
-      render: () => (
-        <div style={{ width: 120 }}>
-          <Button
-            type='primary'
-            style={{ borderRadius: 7, marginRight: 5 }}
-            icon={<UserOutlined />}
-          />
-          <EditStaff />
-          <Button
-            type='primary'
-            style={{ borderRadius: 7, marginRight: 5, marginLeft: 5 }}
-            icon={<DeleteOutlined />}
-          />
-        </div>
-      ),
+      render: (_, record, index) => {
+        return (
+          <div style={{ width: 120 }}>
+            <Link to={`/admin/ho-so-nhan-su/detail-staff?id=${record._id}`}>
+              <Button
+                type='primary'
+                style={{ borderRadius: 7, marginRight: 5 }}
+                icon={<UserOutlined />}
+                onClick={showModalStaffDetail}
+              />
+            </Link>
+            <DetailStaff
+              {...props}
+              index={index}
+              visible={userDetail}
+              onOk={handleOkStaffDetail}
+              onCancel={handleCancelStaffDetail}
+            />
+            <Link to={`/admin/ho-so-nhan-su/edit-staff?id=${record._id}`}>
+              <Button
+                type='primary'
+                style={{ borderRadius: 7 }}
+                icon={<FormOutlined />}
+                onClick={showModalEdit}
+              />
+            </Link>
+            <EditStaff
+              {...props}
+              index={index}
+              visible={EditVisible}
+              onOk={handleOkEdit}
+              onCancel={handleCancelEdit}
+            />
+            <Button
+              type='danger'
+              style={{ borderRadius: 7, marginRight: 5, marginLeft: 5 }}
+              icon={<DeleteOutlined />}
+              onClick={() => {
+                axios({
+                  method: 'DELETE',
+                  url: `https://quanlyquangbao.herokuapp.com/api/xoanhanvien?id=${record._id}`,
+                })
+                  .then(() =>
+                    notification.success({
+                      duration: 4,
+                      message: 'DELETE SUCCEEDED',
+                    })
+                  )
+                  .catch(() =>
+                    notification.error({
+                      duration: 4,
+                      message: 'DELETE FAILED',
+                    })
+                  );
+              }}
+            />
+          </div>
+        );
+      },
     },
   ];
   return (

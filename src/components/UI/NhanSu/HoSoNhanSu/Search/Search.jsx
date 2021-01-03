@@ -8,23 +8,27 @@ const Search = ({ onChange, handleChange }) => {
   return (
     <>
       <Select
-        defaultValue='Danh Mục'
+        labelInValue
+        defaultValue={{ value: 'tennhanvien' }}
         style={{ width: 150, marginLeft: 100, height: 40 }}
         className='ant-select-selector'
+        options={[
+          {
+            id: '1',
+            label: 'Họ Tên',
+            value: 'tennhanvien',
+          },
+          {
+            id: '2',
+            label: 'Email',
+            value: 'email',
+          },
+        ]}
         onChange={handleChange}
-      >
-        <OptGroup label='Loại'>
-          <Option value='hoten'>Họ Tên</Option>
-          <Option value='diachi'>Địa Chỉ</Option>
-        </OptGroup>
-        {/* <OptGroup label='Giám Đốc'>
-          <Option value='Yiminghe'>yiminghe</Option>
-        </OptGroup> */}
-      </Select>
+      ></Select>
       <Input
         placeholder='Tìm kiếm'
         onChange={onChange}
-        enterButton
         className='search-custom'
         style={{ width: 300 }}
       />

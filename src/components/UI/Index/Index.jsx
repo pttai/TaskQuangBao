@@ -12,6 +12,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import AddStaff from '../NhanSu/HoSoNhanSu/AddStaff/AddStaff';
 
 const { Header, Content, Footer, Sider } = Layout;
 

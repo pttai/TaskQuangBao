@@ -1,8 +1,16 @@
 .form_item {
-  .ant-input {
-    width: 290px;
+  .ant-form-item-control-input {
+    .ant-input {
+      width: 450px;
+      height: 40px;
+    }
   }
-  .ant-input-affix-wrapper {
-    width: 290px;
+}
+.form_item1 {
+  .ant-form-item-control-input {
+    .ant-input-password {
+      width: 450px;
+      height: 40px;
+    }
   }
 }

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import './Login.scss';
-import { Form, Input, Button, Checkbox, Card, Row, Col } from 'antd';
+import { Form, Input, Button, Card, Col, notification } from 'antd';
 
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const layout = {
   labelCol: {
@@ -19,29 +20,33 @@ const tailLayout = {
     span: 16,
   },
 };
-const adminUser = {
-  username: 'phantantai',
-  password: 'admin123',
-};
 
 const Login = (props) => {
+  // k co deoendencies => luon luon duoc goi
+  //co dependencies nhung ma mang rong => chi duoc goi luc dau va khong goi nua
+  // array co chua cac bien phu thuoc => khi bien phu thuoc trong mang dependencies thay doi thi moi thuc thi
+
+  //neu gui request : - true:dang nhap duoc co thong tin gui len client -- flase => tra ve mang rong = client []
   const { history } = props;
   const onFinish = (values) => {
-    if (
-      values.username == adminUser.username &&
-      values.password == adminUser.password
-    ) {
-      history.replace('/admin');
-      console.log('Success:', values);
-    } else {
-      onFinishFailed('');
-    }
+    console.log(values);
+    axios({
+      method: 'POST',
+      url: 'https://quanlyquangbao.herokuapp.com/api/login',
+      data: values,
+    })
+      .then((res) => {
+        history.replace('/admin');
+      })
+      .catch((error) => {
+        notification.warning({
+          message: 'failed',
+          duration: 3,
+          message: 'Sai thông tin đăng nhập',
+        });
+        console.log(error);
+      });
   };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
     <div
       style={{
@@ -60,7 +65,16 @@ const Login = (props) => {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <img src='/images/iconQuangBao.png' />
         </div>
-        <p style={{ fontSize: 30, textAlign: 'center' }}> LOGIN</p>
+        <p
+          style={{
+            fontSize: 30,
+            textAlign: 'center',
+            fontWeight: 'bold',
+            marginTop: 8,
+          }}
+        >
+          ĐĂNG NHẬP
+        </p>
 
         <Form
           {...layout}
@@ -69,63 +83,53 @@ const Login = (props) => {
             remember: true,
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          style={{ marginRight: 40 }}
         >
           <Form.Item
             className='form_item'
-            label='Username'
             name='username'
             rules={[
               {
                 required: true,
-                message: 'Please input your username!',
               },
             ]}
           >
-            <Input />
+            <Input placeholder='Tài khoản' />
           </Form.Item>
 
           <Form.Item
-            className='form_item'
-            label='Password'
+            className='form_item1'
             name='password'
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
               },
             ]}
           >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item {...tailLayout} name='remember' valuePropName='checked'>
-            <Row>
-              <Col xs={11}>
-                <Checkbox style={{ padding: '4px 0px' }}>Remember me</Checkbox>
-              </Col>
-              <Col xs={13}>
-                <Button type='link' htmlType='button'>
-                  Forgot your password ?
-                </Button>
-              </Col>
-            </Row>
+            <Input.Password placeholder='Mật khẩu' />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Col xs={12}>
-              <Button type='primary' htmlType='submit' style={{ width: 180 }}>
-                Login
+              <Button
+                type='primary'
+                htmlType='submit'
+                style={{
+                  width: 450,
+                  height: 40,
+                  marginLeft: -150,
+                  fontSize: 15,
+                }}
+              >
+                Đăng nhập
               </Button>
             </Col>
             <Col xs={12}>
-              <Link to='/create-new-account'>
+              <Link to='/quen-mat-khau'>
                 <Button
                   type='link'
                   htmlType='button'
-                  style={{ padding: '12px 0px' }}
+                  style={{ paddingTop: 15 }}
                 >
-                  Craete new account !
+                  Quên mật khẩu ?
                 </Button>
               </Link>
             </Col>

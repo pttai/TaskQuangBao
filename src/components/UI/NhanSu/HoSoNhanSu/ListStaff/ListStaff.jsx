@@ -23,14 +23,13 @@ const ListStaff = (props) => {
       method: 'GET',
       url: 'https://quanlyquangbao.herokuapp.com/api/danhsachnhanvien',
     }).then((res) => {
-      console.log(res);
-      setStaffList(res.data);
-      // setData(res.data);
+      const { data } = res.data;
+      setStaffList(data);
+      setData(data);
     });
   }, []);
 
   const showModal = () => {
-    console.log('click');
     setIsModalVisible(true);
   };
 
@@ -167,6 +166,7 @@ const ListStaff = (props) => {
       <TaskAdd
         {...props}
         visible={isModalVisible}
+        handleVisible={setIsModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       />
@@ -174,8 +174,9 @@ const ListStaff = (props) => {
       <Search onChange={onChange} handleChange={handleChange} />
       <Table
         columns={columns}
-        dataSource={staffList}
+        dataSource={staffList} // receive an array
         style={{ marginTop: 40 }}
+        rowKey={(record) => record._id}
       />
     </div>
   );

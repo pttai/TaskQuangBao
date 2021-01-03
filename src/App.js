@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Login from './components/Login/Login';
 import { Route } from 'react-router';
 import { BrowserRouter, Switch } from 'react-router-dom';
-import Index from './components/UI/Index/Index';
+import Main from './components/UI/MainUI';
 
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route path='/' exact component={Login} />
-          <Route path='/admin' component={Index} />
+          <Route path='/admin' component={Main} />
         </Switch>
       </BrowserRouter>
     </>

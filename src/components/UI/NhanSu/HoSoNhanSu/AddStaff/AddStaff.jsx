@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { PlusCircleOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import React from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 
@@ -23,22 +21,27 @@ const validateMessages = {
   },
 };
 
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-
 const AddStaff = (props) => {
   // const [values, setValues] = useState([]);
   // const [createStaff, setCreateStaff] = useState([]);
   const { history } = props;
 
   const onFinish = (values) => {
-    console.log(values.user);
+    // format date again
+    const data = {
+      ...values,
+      ngaysinh: values.ngaysinh.format('DD-MM-YYYY'),
+      ngaybatdau: values.ngaybatdau.format('DD-MM-YY'),
+    };
+    console.log(data);
     axios({
       method: 'POST',
       url: 'https://quanlyquangbao.herokuapp.com/api/themnhanvien',
-      data: values.user,
+      data,
     }).then((res) => {
       console.log(res.data);
       history.replace('/admin/ho-so-nhan-su');
+      props.handleVisible(false);
     });
   };
 
@@ -57,20 +60,17 @@ const AddStaff = (props) => {
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-          <Form.Item name={['user', 'ngaybatdau']} label='Ngày Bắt Đầu'>
-            <DatePicker
-              initialValues={moment('01/01/2015', dateFormatList[0])}
-              format={dateFormatList}
-            />
+          <Form.Item name={'ngaybatdau'} label='Ngày Bắt Đầu'>
+            <DatePicker />
           </Form.Item>
-          <Form.Item name={['user', 'trangthai']} label='Trạng Thái'>
+          <Form.Item name={'trangthai'} label='Trạng Thái'>
             <Select>
               <Select.Option value='danghiviec'>Đã nghỉ việc</Select.Option>
               <Select.Option value='danglamviec'>Đang làm việc</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
-            name={['user', 'tennhanvien']}
+            name={'tennhanvien'}
             label='Họ Tên'
             rules={[
               {
@@ -82,17 +82,23 @@ const AddStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={['user', 'gioitinh']} label='Giới Tính'>
+          <Form.Item name={'gioitinh'} label='Giới Tính'>
             <Select>
               <Select.Option value='nam'>Nam</Select.Option>
               <Select.Option value='nu'>Nữ</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name={['user', 'sodienthoai']} label='Số Điện Thoại'>
+          <Form.Item name={'iddantoc'} label='Dân tộc'>
+            <Select>
+              <Select.Option value='kinh'>Kinh</Select.Option>
+              <Select.Option value='muong'>Mường</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name={'sdt'} label='Số Điện Thoại'>
             <Input />
           </Form.Item>
           <Form.Item
-            name={['user', 'email']}
+            name={'email'}
             label='Email'
             rules={[
               {
@@ -102,14 +108,15 @@ const AddStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={['user', 'ngaysinh']} label='Ngày Sinh'>
-            <DatePicker
-              initialValues={moment('01/01/2015', dateFormatList[0])}
-              format={dateFormatList}
-            />
+          <Form.Item
+            name={'ngaysinh'}
+            label='Ngày Sinh'
+            rules={[{ type: 'object' }]}
+          >
+            <DatePicker />
           </Form.Item>
           <Form.Item
-            name={['user', 'quequan']}
+            name={'quequan'}
             label='Quê Quán'
             rules={[{}]}
             // value={this.state.name}

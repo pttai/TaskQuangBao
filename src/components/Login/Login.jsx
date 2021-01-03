@@ -90,6 +90,7 @@ const Login = (props) => {
             rules={[
               {
                 required: true,
+                message: 'Vui lòng nhập tên đăng nhập',
               },
             ]}
           >
@@ -102,6 +103,7 @@ const Login = (props) => {
             rules={[
               {
                 required: true,
+                message: 'Vui lòng nhập password',
               },
             ]}
           >

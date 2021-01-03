@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var chamcongRouter = require('./routes/chamcong');
 var cors = require('cors');
 var app = express();
 var mongoose = require('mongoose');
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', chamcongRouter);
 mongoose.connect('mongodb+srv://root:Quanlyquangbao@cluster0.sqe83.mongodb.net/QuanLyQuangBao', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // catch 404 and forward to error handler

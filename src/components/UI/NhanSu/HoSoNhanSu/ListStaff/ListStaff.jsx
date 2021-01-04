@@ -28,7 +28,7 @@ const ListStaff = (props) => {
       url: 'https://quanlyquangbao.herokuapp.com/api/danhsachnhanvien',
     }).then((res) => {
       const { data } = res.data;
-      setStaffList(data);
+      setStaffList(res.data);
       setData(data);
     });
   }, []);

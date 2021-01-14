@@ -21,17 +21,18 @@ const ListStaff = (props) => {
   const [staffList, setStaffList] = useState([]);
   const [data, setData] = useState([]);
   const [key, setKey] = useState('tennhanvien');
-
+  const [deleting, setDeleting] = useState(false);
+  const [creating, setCreating] = useState(false);
   useEffect(() => {
     axios({
       method: 'GET',
-      url: 'https://quanlyquangbao.herokuapp.com/api/danhsachnhanvien',
+      url: 'https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien',
     }).then((res) => {
-      const { data } = res.data;
+      const { data } = res;
       setStaffList(data);
       setData(data);
     });
-  }, []);
+  }, [deleting, creating]);
   console.log(staffList);
   const showModal = () => {
     setIsModalVisible(true);
@@ -187,22 +188,25 @@ const ListStaff = (props) => {
               style={{ borderRadius: 7, marginRight: 5, marginLeft: 5 }}
               icon={<DeleteOutlined />}
               onClick={() => {
+                setDeleting(true);
                 axios({
                   method: 'DELETE',
-                  url: `https://quanlyquangbao.herokuapp.com/api/xoanhanvien?id=${record._id}`,
+                  url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/xoanhanvien/${record._id}`,
                 })
-                  .then(() =>
+                  .then(() => {
                     notification.success({
                       duration: 4,
                       message: 'DELETE SUCCEEDED',
-                    })
-                  )
-                  .catch(() =>
+                    });
+                    setDeleting(false);
+                  })
+                  .catch(() => {
                     notification.error({
                       duration: 4,
                       message: 'DELETE FAILED',
-                    })
-                  );
+                    });
+                    setDeleting(false);
+                  });
               }}
             />
           </div>
@@ -243,6 +247,7 @@ const ListStaff = (props) => {
         handleVisible={setIsModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        setCreating={setCreating}
       />
 
       <Search onChange={onChange} handleChange={handleChange} />

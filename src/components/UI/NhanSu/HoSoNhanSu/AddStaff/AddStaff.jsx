@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const layout = {
   labelCol: {
@@ -25,25 +27,31 @@ const AddStaff = (props) => {
   // const [values, setValues] = useState([]);
   // const [createStaff, setCreateStaff] = useState([]);
   const { history } = props;
-
+  const [Ethnicity, setEthnicity] = useState([]);
   const onFinish = (values) => {
     // format date again
+    props.setCreating(true);
     const data = {
       ...values,
-      ngaysinh: values.ngaysinh.format('DD-MM-YYYY'),
-      ngaybatdau: values.ngaybatdau.format('DD-MM-YY'),
+      ngaysinh: values.ngaysinh.format('YYYY-MM-DD[T00:00:00.000Z]'),
+      ngaybatdau: values.ngaybatdau.format('YYYY-MM-DD[T00:00:00.000Z]'),
     };
-    console.log(data);
+
     axios({
       method: 'POST',
-      url: 'https://quanlyquangbao.herokuapp.com/api/themnhanvien',
+      url: 'http://quanlyquangbao.herokuapp.com/api/nhanvien/themnhanvien',
       data,
     }).then((res) => {
-      console.log(res.data);
       history.replace('/admin/ho-so-nhan-su');
       props.handleVisible(false);
+      props.setCreating(false);
     });
   };
+  useEffect(() => {
+    axios
+      .get('https://quanlyquangbao.herokuapp.com/api/dantoc/danhsachdantoc')
+      .then((res) => setEthnicity(res.data.data));
+  }, []);
 
   return (
     <>
@@ -90,8 +98,15 @@ const AddStaff = (props) => {
           </Form.Item>
           <Form.Item name={'iddantoc'} label='Dân tộc'>
             <Select>
-              <Select.Option value='kinh'>Kinh</Select.Option>
-              <Select.Option value='muong'>Mường</Select.Option>
+              {Ethnicity.map((dantoc) => {
+                return (
+                  <Select.Option key={dantoc._id} value={dantoc._id}>
+                    {dantoc.tendantoc}
+                  </Select.Option>
+                );
+              })}
+              {/* <Select.Option value='kinh'>Kinh</Select.Option>
+              <Select.Option value='muong'>Mường</Select.Option> */}
             </Select>
           </Form.Item>
           <Form.Item name={'sdt'} label='Số Điện Thoại'>
@@ -118,6 +133,15 @@ const AddStaff = (props) => {
           <Form.Item
             name={'quequan'}
             label='Quê Quán'
+            rules={[{ required: true }]}
+            // value={this.state.name}
+            // onChange={this.onChange}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={'diachi'}
+            label='Địa chỉ'
             rules={[{}]}
             // value={this.state.name}
             // onChange={this.onChange}

@@ -1,0 +1,19 @@
+[
+  {
+    "mucheso": "2.34",
+    "idbac": {"$oid": "5ffd6a5723d4a52ac4e822a2"}
+  },
+  {
+    "mucheso": "2.10",
+    "idbac": {"$oid": "5ffd6a5723d4a52ac4e822a3"}
+  },
+  {
+    "mucheso": "1.86",
+    "idbac": {"$oid": "5ffd6a5723d4a52ac4e822a4"}
+  },
+  {
+    "mucheso": "1.50",
+    "idbac": {"$oid": "5ffd6a5723d4a52ac4e822a5"}
+  }
+]
+

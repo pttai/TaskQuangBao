@@ -1,0 +1,2 @@
+Server information:
+mongodb+srv://root:Quanlyquangbao@cluster0.sqe83.mongodb.net/QuanLyQuangBao

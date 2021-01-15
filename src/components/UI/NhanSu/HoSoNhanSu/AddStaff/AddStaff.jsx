@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const layout = {
   labelCol: {
@@ -51,7 +49,7 @@ const AddStaff = (props) => {
     axios
       .get('https://quanlyquangbao.herokuapp.com/api/dantoc/danhsachdantoc')
       .then((res) => setEthnicity(res.data.data));
-  });
+  }, []);
 
   return (
     <>
@@ -146,15 +144,7 @@ const AddStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name={'diachi'}
-            label='Địa chỉ'
-            rules={[{}]}
-            // value={this.state.name}
-            // onChange={this.onChange}
-          >
-            <Input />
-          </Form.Item>
+
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
             <Button type='primary' htmlType='submit'>
               Thêm

@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
+import { Modal, Button, Form, Input, Select } from 'antd';
 import queryString from 'query-string';
+
 const layout = {
   labelCol: {
     span: 8,
@@ -21,26 +22,23 @@ const validateMessages = {
   },
 };
 
-const EditStaff = (props) => {
+const EditCongTy = (props) => {
   const { id } = queryString.parse(props.location.search);
   const { index } = props;
   const onFinish = (values) => {
-    props.setEditing(true);
     console.log(values);
     axios({
       method: 'POST',
       url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/suanhanvien/${id}`,
       data: values[`user_${index}`],
     }).then(() => {
-      props.history.replace('/admin/nhan-vien');
-      props.setEditing(false);
+      props.history.replace('/admin/cong-ty');
     });
   };
-
   return (
     <>
       <Modal
-        title='Sửa Nhân Viên'
+        title='Sửa Công Ty'
         visible={props.visible}
         onOk={props.onOk}
         onCancel={props.onCancel}
@@ -48,18 +46,13 @@ const EditStaff = (props) => {
       >
         <Form
           {...layout}
+          name='nest-messages'
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-          <Form.Item name={[`user-${index}`, 'trangthai']} label='Trạng Thái'>
-            <Select>
-              <Select.Option value='danghiviec'>Đã nghỉ việc</Select.Option>
-              <Select.Option value='danglamviec'>Đang làm việc</Select.Option>
-            </Select>
-          </Form.Item>
           <Form.Item
-            name={[`user-${index}`, 'hoten']}
-            label='Họ Tên'
+            name={'tendoanhnghiep'}
+            label='Tên Doanh Nghiệp'
             rules={[
               {
                 required: true,
@@ -70,39 +63,31 @@ const EditStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={[`user-${index}`, 'gioitinh']} label='Giới Tính'>
+          <Form.Item name={'tinhtranghoatdong'} label='Tình Trạng Hoạt Động'>
             <Select>
-              <Select.Option value='nam'>Nam</Select.Option>
-              <Select.Option value='nu'>Nữ</Select.Option>
+              <Select.Option value='dangung'>Đã ngừng</Select.Option>
+              <Select.Option value='danghoatdong'>Đang hoạt động</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item
-            name={[`user-${index}`, 'sodienthoai']}
-            label='Số Điện Thoại'
-          >
+          <Form.Item name={'loaihinhphaply'} label='Loại Hình'>
             <Input />
           </Form.Item>
           <Form.Item
-            name={[`user-${index}`, 'email']}
-            label='Email'
-            rules={[
-              {
-                type: 'email',
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item name={[`user-${index}`, 'ngaysinh']} label='Ngày Sinh'>
-            <DatePicker />
-          </Form.Item>
-          <Form.Item
-            name={[`user-${index}`, 'quequan']}
-            label='Quê Quán'
-
+            name={'ngaythanhlap'}
+            label='Ngày Thành Lập'
+            rules={[{}]}
             // value={this.state.name}
             // onChange={this.onChange}
           >
+            <Input />
+          </Form.Item>
+          <Form.Item name={'loaihinhphaply'} label='Loại Hình'>
+            <Input />
+          </Form.Item>
+          <Form.Item name={'diachi'} label='Địa Chỉ'>
+            <Input />
+          </Form.Item>
+          <Form.Item name={'nganhkinhdoanh'} label='Ngành Kinh Doanh'>
             <Input />
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -115,4 +100,5 @@ const EditStaff = (props) => {
     </>
   );
 };
-export default EditStaff;
+
+export default EditCongTy;

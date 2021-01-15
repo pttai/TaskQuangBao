@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import { useState } from 'react';
@@ -42,7 +42,7 @@ const AddStaff = (props) => {
       url: 'http://quanlyquangbao.herokuapp.com/api/nhanvien/themnhanvien',
       data,
     }).then((res) => {
-      history.replace('/admin/ho-so-nhan-su');
+      history.replace('/admin/nhan-vien');
       props.handleVisible(false);
       props.setCreating(false);
     });
@@ -51,7 +51,7 @@ const AddStaff = (props) => {
     axios
       .get('https://quanlyquangbao.herokuapp.com/api/dantoc/danhsachdantoc')
       .then((res) => setEthnicity(res.data.data));
-  }, []);
+  });
 
   return (
     <>
@@ -105,8 +105,6 @@ const AddStaff = (props) => {
                   </Select.Option>
                 );
               })}
-              {/* <Select.Option value='kinh'>Kinh</Select.Option>
-              <Select.Option value='muong'>Mường</Select.Option> */}
             </Select>
           </Form.Item>
           <Form.Item name={'sdt'} label='Số Điện Thoại'>
@@ -134,6 +132,15 @@ const AddStaff = (props) => {
             name={'quequan'}
             label='Quê Quán'
             rules={[{ required: true }]}
+            // value={this.state.name}
+            // onChange={this.onChange}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={'diachi'}
+            label='Địa chỉ'
+            rules={[{}]}
             // value={this.state.name}
             // onChange={this.onChange}
           >

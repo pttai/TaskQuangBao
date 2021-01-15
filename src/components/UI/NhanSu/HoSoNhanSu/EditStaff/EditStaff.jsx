@@ -24,13 +24,18 @@ const validateMessages = {
 const EditStaff = (props) => {
   const { id } = queryString.parse(props.location.search);
   const { index } = props;
+
   const onFinish = (values) => {
+    const data = {
+      ...values,
+      ngaysinh: values.ngaysinh.format('YYYY-MM-DD[T00:00:00.000Z]'),
+    };
+    console.log(data);
     props.setEditing(true);
-    console.log(values);
     axios({
-      method: 'POST',
+      method: 'PUT',
       url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/suanhanvien/${id}`,
-      data: values[`user_${index}`],
+      data,
     }).then(() => {
       props.history.replace('/admin/nhan-vien');
       props.setEditing(false);
@@ -51,14 +56,14 @@ const EditStaff = (props) => {
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-          <Form.Item name={[`user-${index}`, 'trangthai']} label='Trạng Thái'>
+          <Form.Item name={'trangthai'} label='Trạng Thái'>
             <Select>
               <Select.Option value='danghiviec'>Đã nghỉ việc</Select.Option>
               <Select.Option value='danglamviec'>Đang làm việc</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
-            name={[`user-${index}`, 'hoten']}
+            name={'tennhanvien'}
             label='Họ Tên'
             rules={[
               {
@@ -70,20 +75,17 @@ const EditStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={[`user-${index}`, 'gioitinh']} label='Giới Tính'>
+          <Form.Item name={'gioitinh'} label='Giới Tính'>
             <Select>
               <Select.Option value='nam'>Nam</Select.Option>
               <Select.Option value='nu'>Nữ</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item
-            name={[`user-${index}`, 'sodienthoai']}
-            label='Số Điện Thoại'
-          >
+          <Form.Item name={'sdt'} label='Số Điện Thoại'>
             <Input />
           </Form.Item>
           <Form.Item
-            name={[`user-${index}`, 'email']}
+            name={'email'}
             label='Email'
             rules={[
               {
@@ -93,12 +95,21 @@ const EditStaff = (props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name={[`user-${index}`, 'ngaysinh']} label='Ngày Sinh'>
+          <Form.Item name={'ngaysinh'} label='Ngày Sinh'>
             <DatePicker />
           </Form.Item>
           <Form.Item
-            name={[`user-${index}`, 'quequan']}
+            name={'quequan'}
             label='Quê Quán'
+
+            // value={this.state.name}
+            // onChange={this.onChange}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={'diachi'}
+            label='Địa chỉ'
 
             // value={this.state.name}
             // onChange={this.onChange}

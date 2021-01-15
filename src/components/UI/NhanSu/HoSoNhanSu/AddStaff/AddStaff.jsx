@@ -26,7 +26,6 @@ const AddStaff = (props) => {
   // const [createStaff, setCreateStaff] = useState([]);
   const { history } = props;
   const [Ethnicity, setEthnicity] = useState([]);
-
   const onFinish = (values) => {
     // format date again
     props.setCreating(true);
@@ -41,7 +40,6 @@ const AddStaff = (props) => {
       url: 'http://quanlyquangbao.herokuapp.com/api/nhanvien/themnhanvien',
       data,
     }).then((res) => {
-      console.log(res.data);
       history.replace('/admin/nhan-vien');
       props.handleVisible(false);
       props.setCreating(false);
@@ -51,7 +49,7 @@ const AddStaff = (props) => {
     axios
       .get('https://quanlyquangbao.herokuapp.com/api/dantoc/danhsachdantoc')
       .then((res) => setEthnicity(res.data.data));
-  });
+  }, []);
 
   return (
     <>
@@ -131,7 +129,7 @@ const AddStaff = (props) => {
           <Form.Item
             name={'quequan'}
             label='Quê Quán'
-            rules={[{}]}
+            rules={[{ required: true }]}
             // value={this.state.name}
             // onChange={this.onChange}
           >
@@ -146,6 +144,7 @@ const AddStaff = (props) => {
           >
             <Input />
           </Form.Item>
+
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
             <Button type='primary' htmlType='submit'>
               Thêm

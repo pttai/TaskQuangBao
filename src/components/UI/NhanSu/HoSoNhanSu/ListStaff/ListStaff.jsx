@@ -30,12 +30,16 @@ const ListStaff = (props) => {
       method: 'GET',
       url: 'https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien',
     }).then((res) => {
-      setStaffList(res.data);
-      setData(res.data);
+      const data = [];
+      for (let i = 1; i < res.data.length; i++) {
+        data.push({ ...res.data[i], key: i });
+      }
+
+      setStaffList(data);
+      setData(data);
     });
   }, [deleting, creating, editing]);
   console.log(staffList);
-
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -139,8 +143,8 @@ const ListStaff = (props) => {
   const columns = [
     {
       title: '#',
-      dataIndex: [],
-      key: [],
+      dataIndex: 'key',
+      key: 'key',
     },
     {
       title: 'Họ Tên',
@@ -230,7 +234,7 @@ const ListStaff = (props) => {
                 setDeleting(true);
                 axios({
                   method: 'DELETE',
-                  url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/xoanhanvien?id=${record._id}`,
+                  url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/xoanhanvien/${record._id}`,
                 })
                   .then(() => {
                     notification.success({

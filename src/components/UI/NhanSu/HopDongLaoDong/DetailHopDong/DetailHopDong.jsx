@@ -2,9 +2,9 @@ import { Modal, Row, Col, notification, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import axios from 'axios';
-const DetailStaff = (props) => {
+const DetailHopDong = (props) => {
   const { id } = queryString.parse(props.location.search);
-  const [userDetail, setUserDetail] = useState({});
+  const [hopdongDetail, setHopDongDetail] = useState({});
 
   useEffect(() => {
     if (id) {
@@ -13,7 +13,7 @@ const DetailStaff = (props) => {
         url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien/${id}`,
       }).then((res) => {
         if (res.data?.data) {
-          setUserDetail(res.data?.data[0]);
+          setHopDongDetail(res.data?.data[0]);
         }
       });
     }
@@ -22,7 +22,7 @@ const DetailStaff = (props) => {
   return (
     <>
       <Modal
-        title='Thông tin Nhân Viên'
+        title='Thông tin Hợp Đồng'
         visible={props.visible}
         onOk={props.onOk}
         onCancel={props.onCancel}
@@ -32,12 +32,12 @@ const DetailStaff = (props) => {
           <Col span={24}>
             <Row>
               <Col span={5}>
-                <Typography.Text>Họ và tên:</Typography.Text>
+                <Typography.Text>Loại Hợp Đồng:</Typography.Text>
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  Nguyễn Thị Bích
-                  {userDetail.tennhanvien}
+                  Hợp đồng xác định thời hạn
+                  {hopdongDetail.loaihopdong}
                 </Typography.Paragraph>
               </Col>
             </Row>
@@ -45,51 +45,12 @@ const DetailStaff = (props) => {
           <Col span={24}>
             <Row>
               <Col span={5}>
-                <Typography.Text>Giới tính:</Typography.Text>
-              </Col>
-              <Col span={19}>
-                <Typography.Paragraph>
-                  Nữ
-                  {userDetail.gioitinh}
-                </Typography.Paragraph>
-              </Col>
-            </Row>
-          </Col>
-          <Col span={24}>
-            <Row>
-              <Col span={5}>
-                <Typography.Text>Số điện thoại:</Typography.Text>
-              </Col>
-              <Col span={19}>
-                <Typography.Paragraph>
-                  {' '}
-                  0932423123{userDetail.sdt}
-                </Typography.Paragraph>
-              </Col>
-            </Row>
-          </Col>
-          <Col span={24}>
-            <Row>
-              <Col span={5}>
-                <Typography.Text>Email:</Typography.Text>
-              </Col>
-              <Col span={19}>
-                <Typography.Paragraph>
-                  bichnguyen@gmail.com
-                  {userDetail.email}
-                </Typography.Paragraph>
-              </Col>
-            </Row>
-          </Col>
-          <Col span={24}>
-            <Row>
-              <Col span={5}>
-                <Typography.Text>Ngày sinh:</Typography.Text>
+                <Typography.Text>Ngày Bắt Đầu:</Typography.Text>
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
                   1986-05-18T16:00:00.000Z
-                  {userDetail.ngaysinh}
+                  {hopdongDetail.ngaybatdau}
                 </Typography.Paragraph>
               </Col>
             </Row>
@@ -97,12 +58,12 @@ const DetailStaff = (props) => {
           <Col span={24}>
             <Row>
               <Col span={5}>
-                <Typography.Text>Quê quán:</Typography.Text>
+                <Typography.Text>Ngày Kết Thúc:</Typography.Text>
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  Bến Tre
-                  {userDetail.quequan}
+                  1986-05-18T16:00:00.000Z
+                  {hopdongDetail.ngayketthuc}
                 </Typography.Paragraph>
               </Col>
             </Row>
@@ -110,33 +71,46 @@ const DetailStaff = (props) => {
           <Col span={24}>
             <Row>
               <Col span={5}>
-                <Typography.Text>Dân Tộc:</Typography.Text>
+                <Typography.Text>Nội Dung:</Typography.Text>
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  Kinh
-                  {userDetail.dantoc}
+                  Nội dung hợp động
+                  {hopdongDetail.noidung}
                 </Typography.Paragraph>
               </Col>
             </Row>
           </Col>
-
-          {/* <Col span={24}>
+          <Col span={24}>
             <Row>
               <Col span={5}>
-                <Typography.Text>Trạng thái:</Typography.Text>
+                <Typography.Text>Tên Nhân Viên:</Typography.Text>
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  {userDetail.idnhanvienchinhthuc?.trangthai}
+                  Nguyễn Thị Bích
+                  {hopdongDetail.tennhanvien}
                 </Typography.Paragraph>
               </Col>
             </Row>
-          </Col> */}
+          </Col>
+          <Col span={24}>
+            <Row>
+              <Col span={5}>
+                <Typography.Text>Tên Doanh Nghiệp:</Typography.Text>
+              </Col>
+              <Col span={19}>
+                <Typography.Paragraph>
+                  Công ty TNHH Quang Bảo
+                  {hopdongDetail.tendoanhnghiep}
+                </Typography.Paragraph>
+              </Col>
+            </Row>
+          </Col>
         </Row>
       </Modal>
     </>
   );
 };
 
-export default DetailStaff;
+export default DetailHopDong;

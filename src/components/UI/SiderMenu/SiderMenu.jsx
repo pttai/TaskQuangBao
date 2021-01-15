@@ -5,7 +5,6 @@ import {
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
-  TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -56,27 +55,28 @@ const SiderMenu = (props) => {
         defaultSelectedKeys={[]}
       >
         <Menu.Item key='1'>
-          <Link to='/admin/ho-so-nhan-su'>Hồ Sơ Nhân Sự</Link>
+          <Link to='/admin/nhan-vien'>Nhân Viên</Link>
         </Menu.Item>
         <Menu.Item key='2'>
-          <Link to='/admin/ho-so-xin-viec'>Hồ Sơ Xin Việc</Link>
+          <Link to='/admin/chuc-vu'>Chức Vụ</Link>
         </Menu.Item>
-        <Menu.Item key='3'>Hồ Sơ Nhân Viên</Menu.Item>
-        <Menu.Item key='4'> Nhật Ký Làm Việc</Menu.Item>
-        <Menu.Item key='5'> Lương</Menu.Item>
-        <Menu.Item key='6'>Tuyển Dụng</Menu.Item>
+        <Menu.Item key='3'>
+          <Link to='/admin/hop-dong-lao-dong'>Hợp Đồng Lao Động</Link>
+        </Menu.Item>
+        <Menu.Item key='4'>
+          <Link to='/admin/dan-toc'>Dân Tộc</Link>
+        </Menu.Item>
+        <Menu.Item key='5'>
+          <Link to='/admin/cong-ty'>Công Ty</Link>
+        </Menu.Item>
       </SubMenu>
       <SubMenu key='sub3' icon={<UserOutlined />} title='User'>
         <Menu.Item key='14'>Tom</Menu.Item>
         <Menu.Item key='15'>Bill</Menu.Item>
         <Menu.Item key='16'>Alex</Menu.Item>
       </SubMenu>
-      <SubMenu key='sub4' icon={<TeamOutlined />} title='Team'>
-        <Menu.Item key='17'>Team 1</Menu.Item>
-        <Menu.Item key='18'>Team 2</Menu.Item>
-      </SubMenu>
-      <Menu.Item key='19' icon={<FileOutlined />}>
-        Files
+      <Menu.Item key='17' icon={<FileOutlined />}>
+        Thống Kê
       </Menu.Item>
     </Menu>
   );

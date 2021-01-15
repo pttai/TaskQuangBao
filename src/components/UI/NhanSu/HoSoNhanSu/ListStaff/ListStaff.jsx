@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ExportJsonExcel from 'js-export-excel';
 import { Table, Button, Breadcrumb, notification } from 'antd';
 import {
   DeleteOutlined,
@@ -6,7 +7,7 @@ import {
   PlusCircleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import TaskAdd from '../AddStaff/AddStaff';
+import AddStaff from '../AddStaff/AddStaff';
 import Search from '../Search/Search';
 import axios from 'axios';
 import { normalizeVNText } from '../../../../../utils/normalizeVNText';
@@ -16,23 +17,25 @@ import { Link } from 'react-router-dom';
 
 const ListStaff = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [EditVisible, setEditVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
   const [userDetail, setUserDetail] = useState(false);
   const [staffList, setStaffList] = useState([]);
   const [data, setData] = useState([]);
   const [key, setKey] = useState('tennhanvien');
-
+  const [deleting, setDeleting] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState(false);
   useEffect(() => {
     axios({
       method: 'GET',
-      url: 'https://quanlyquangbao.herokuapp.com/api/danhsachnhanvien',
+      url: 'https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien',
     }).then((res) => {
-      const { data } = res.data;
-      setStaffList(data);
-      setData(data);
+      setStaffList(res.data);
+      setData(res.data);
     });
-  }, []);
+  }, [deleting, creating, editing]);
   console.log(staffList);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -43,7 +46,7 @@ const ListStaff = (props) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    props.history.replace('/admin/ho-so-nhan-su');
+    props.history.replace('/admin/nhan-vien');
   };
 
   const showModalEdit = () => {
@@ -56,7 +59,7 @@ const ListStaff = (props) => {
 
   const handleCancelEdit = () => {
     setEditVisible(false);
-    props.history.replace('/admin/ho-so-nhan-su');
+    props.history.replace('/admin/nhan-vien');
   };
 
   const showModalStaffDetail = () => {
@@ -69,9 +72,39 @@ const ListStaff = (props) => {
 
   const handleCancelStaffDetail = () => {
     setUserDetail(false);
-    props.history.replace('/admin/ho-so-nhan-su');
+    props.history.replace('/admin/nhan-vien');
   };
-  const onChange = (e) => {
+
+  const downloadExcel = () => {
+    let option = {};
+    let dataTable = [];
+    if (staffList) {
+      for (let i in staffList) {
+        if (staffList) {
+          console.log(staffList[i]);
+          let obj = {
+            'Employee ID': staffList[i]._id,
+            'Employee name': staffList[i].tennhanvien,
+          };
+          dataTable.push(obj);
+        }
+      }
+    }
+    option.fileName = 'Employee Information';
+    option.datas = [
+      {
+        sheetData: dataTable,
+        sheetName: 'sheet',
+        sheetFilter: ['Emloyee ID', 'Emloyee Name'],
+        sheetHeader: ['Emloyee ID', 'Emloyee Name'],
+      },
+    ];
+    console.log(option);
+    const toExcel = new ExportJsonExcel(option);
+    toExcel.saveExcel();
+  };
+
+  const onChange = (e, sorter) => {
     if (e.target.value.trim().match(/\\/g)) return;
     const keyword = e.target.value.trim();
     if (!keyword) setStaffList(data);
@@ -123,6 +156,12 @@ const ListStaff = (props) => {
       title: 'Điện Thoại',
       dataIndex: 'sdt',
       key: 'sdt',
+      sorter: (a, b) => a.sdt - b.sdt,
+    },
+    {
+      title: 'Địa Chỉ',
+      dataIndex: 'diachi',
+      key: 'diachi',
     },
     {
       title: 'Email',
@@ -130,14 +169,14 @@ const ListStaff = (props) => {
       key: 'email',
     },
     {
-      title: 'Ngày Sinh',
-      dataIndex: 'ngaysinh',
-      key: 'ngaysinh',
-    },
-    {
       title: 'Quê Quán',
       dataIndex: 'quequan',
       key: 'quequan',
+    },
+    {
+      title: 'Trại Thái',
+      dataIndex: 'trangthai',
+      key: 'trangthai',
     },
     {
       title: 'Dân Tộc',
@@ -152,7 +191,7 @@ const ListStaff = (props) => {
       render: (_, record, index) => {
         return (
           <div style={{ width: 120 }}>
-            <Link to={`/admin/ho-so-nhan-su/detail-staff?id=${record._id}`}>
+            <Link to={`/admin/nhan-vien/thong-tin-nhan-vien?id=${record._id}`}>
               <Button
                 type='primary'
                 style={{ borderRadius: 7, marginRight: 5 }}
@@ -167,7 +206,7 @@ const ListStaff = (props) => {
               onOk={handleOkStaffDetail}
               onCancel={handleCancelStaffDetail}
             />
-            <Link to={`/admin/ho-so-nhan-su/edit-staff?id=${record._id}`}>
+            <Link to={`/admin/nhan-vien/chinh-sua-nhan-vien?id=${record._id}`}>
               <Button
                 type='primary'
                 style={{ borderRadius: 7 }}
@@ -178,31 +217,35 @@ const ListStaff = (props) => {
             <EditStaff
               {...props}
               index={index}
-              visible={EditVisible}
+              visible={editVisible}
               onOk={handleOkEdit}
               onCancel={handleCancelEdit}
+              setEditing={setEditing}
             />
             <Button
               type='danger'
               style={{ borderRadius: 7, marginRight: 5, marginLeft: 5 }}
               icon={<DeleteOutlined />}
               onClick={() => {
+                setDeleting(true);
                 axios({
                   method: 'DELETE',
-                  url: `https://quanlyquangbao.herokuapp.com/api/xoanhanvien?id=${record._id}`,
+                  url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/xoanhanvien?id=${record._id}`,
                 })
-                  .then(() =>
+                  .then(() => {
                     notification.success({
                       duration: 4,
-                      message: 'DELETE SUCCEEDED',
-                    })
-                  )
-                  .catch(() =>
+                      message: 'XÓA THÀNH CÔNG',
+                    });
+                    setDeleting(false);
+                  })
+                  .catch(() => {
                     notification.error({
                       duration: 4,
-                      message: 'DELETE FAILED',
-                    })
-                  );
+                      message: 'XÓA THẤT BẠI',
+                    });
+                    setDeleting(false);
+                  });
               }}
             />
           </div>
@@ -214,9 +257,10 @@ const ListStaff = (props) => {
     <div>
       <Breadcrumb style={{ margin: '16px 0', fontSize: 20 }}>
         <Breadcrumb.Item>Nhân Sự</Breadcrumb.Item>
-        <Breadcrumb.Item>Hồ Sơ Nhân Sự</Breadcrumb.Item>
+        <Breadcrumb.Item>Nhân Viên</Breadcrumb.Item>
       </Breadcrumb>
       <Button
+        onClick={staffList ? downloadExcel : null}
         tyle='primary'
         style={{
           borderRadius: 7,
@@ -227,7 +271,7 @@ const ListStaff = (props) => {
       >
         Xuất File
       </Button>
-      <Link to='/admin/ho-so-nhan-su/add-staff'>
+      <Link to='/admin/nhan-vien/them-nhan-vien'>
         <Button
           type='primary'
           style={{ borderRadius: 7 }}
@@ -237,12 +281,13 @@ const ListStaff = (props) => {
           Thêm Nhân Viên
         </Button>
       </Link>
-      <TaskAdd
+      <AddStaff
         {...props}
         visible={isModalVisible}
         handleVisible={setIsModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        setCreating={setCreating}
       />
 
       <Search onChange={onChange} handleChange={handleChange} />
@@ -251,6 +296,7 @@ const ListStaff = (props) => {
         dataSource={staffList} // receive an array
         style={{ marginTop: 40 }}
         rowKey={(record) => record._id}
+        onChange={onChange}
       />
     </div>
   );

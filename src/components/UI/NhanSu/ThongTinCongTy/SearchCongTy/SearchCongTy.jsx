@@ -1,26 +1,26 @@
 import React from 'react';
-import './Search.scss';
+import './SearchCongTy.scss';
 import { Input, Select } from 'antd';
 
-const Search = ({ onChange, handleChange }) => {
+const SearchCongTy = ({ onChange, handleChange }) => {
   return (
     <>
       <Select
         labelInValue
-        defaultValue={{ value: 'tennhanvien' }}
+        defaulValue={{ value: 'tendoanhnghiep' }}
         style={{ width: 150, marginLeft: 100, height: 40 }}
         className='ant-select-selector'
         options={[
           {
             id: '1',
-            label: 'Họ Tên',
-            value: 'tennhanvien',
+            label: 'Tên Doanh Nghiệp',
+            value: 'tendoanhnghiep',
           },
-          {
-            id: '2',
-            label: 'Email',
-            value: 'email',
-          },
+          //   {
+          //     id: '2',
+          //     label: 'Email',
+          //     value: 'email',
+          //   },
         ]}
         onChange={handleChange}
       ></Select>
@@ -33,4 +33,5 @@ const Search = ({ onChange, handleChange }) => {
     </>
   );
 };
-export default Search;
+
+export default SearchCongTy;

@@ -12,8 +12,8 @@ const DetailStaff = (props) => {
         method: 'GET',
         url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien/${id}`,
       }).then((res) => {
-        if (res.data?.data) {
-          setUserDetail(res.data?.data[0]);
+        if (res.data?.success) {
+          setUserDetail(res.data.success);
         }
       });
     }
@@ -36,7 +36,6 @@ const DetailStaff = (props) => {
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  Nguyễn Thị Bích
                   {userDetail.tennhanvien}
                 </Typography.Paragraph>
               </Col>
@@ -49,7 +48,6 @@ const DetailStaff = (props) => {
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  Nữ
                   {userDetail.gioitinh}
                 </Typography.Paragraph>
               </Col>
@@ -61,10 +59,7 @@ const DetailStaff = (props) => {
                 <Typography.Text>Số điện thoại:</Typography.Text>
               </Col>
               <Col span={19}>
-                <Typography.Paragraph>
-                  {' '}
-                  0932423123{userDetail.sdt}
-                </Typography.Paragraph>
+                <Typography.Paragraph>{userDetail.sdt}</Typography.Paragraph>
               </Col>
             </Row>
           </Col>
@@ -74,10 +69,7 @@ const DetailStaff = (props) => {
                 <Typography.Text>Email:</Typography.Text>
               </Col>
               <Col span={19}>
-                <Typography.Paragraph>
-                  bichnguyen@gmail.com
-                  {userDetail.email}
-                </Typography.Paragraph>
+                <Typography.Paragraph>{userDetail.email}</Typography.Paragraph>
               </Col>
             </Row>
           </Col>
@@ -88,7 +80,6 @@ const DetailStaff = (props) => {
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  1986-05-18T16:00:00.000Z
                   {userDetail.ngaysinh}
                 </Typography.Paragraph>
               </Col>
@@ -101,21 +92,7 @@ const DetailStaff = (props) => {
               </Col>
               <Col span={19}>
                 <Typography.Paragraph>
-                  Bến Tre
                   {userDetail.quequan}
-                </Typography.Paragraph>
-              </Col>
-            </Row>
-          </Col>
-          <Col span={24}>
-            <Row>
-              <Col span={5}>
-                <Typography.Text>Dân Tộc:</Typography.Text>
-              </Col>
-              <Col span={19}>
-                <Typography.Paragraph>
-                  Kinh
-                  {userDetail.dantoc}
                 </Typography.Paragraph>
               </Col>
             </Row>

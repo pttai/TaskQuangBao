@@ -2,12 +2,12 @@ import React from 'react';
 import './SearchHopDong.scss';
 import { Input, Select } from 'antd';
 
-const SearchHopDong = ({ onChange, handleChange }) => {
+const SearchBac = ({ onChange, handleChange }) => {
   return (
     <>
       <Select
         labelInValue
-        defaulValue={{ value: 'loaihopdong' }}
+        defaultValue={{ value: 'loaihopdong' }}
         style={{ width: 150, marginLeft: 100, height: 40 }}
         className='ant-select-selector'
         options={[
@@ -16,11 +16,6 @@ const SearchHopDong = ({ onChange, handleChange }) => {
             label: 'Loại Hợp Đồng',
             value: 'loaihopdong',
           },
-          //   {
-          //     id: '2',
-          //     label: 'Email',
-          //     value: 'email',
-          //   },
         ]}
         onChange={handleChange}
       ></Select>
@@ -33,5 +28,4 @@ const SearchHopDong = ({ onChange, handleChange }) => {
     </>
   );
 };
-
-export default SearchHopDong;
+export default SearchBac;

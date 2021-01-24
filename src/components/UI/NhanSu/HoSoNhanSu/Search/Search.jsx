@@ -16,11 +16,11 @@ const Search = ({ onChange, handleChange }) => {
             label: 'Họ Tên',
             value: 'tennhanvien',
           },
-          {
-            id: '2',
-            label: 'Email',
-            value: 'email',
-          },
+          // {
+          //   id: '2',
+          //   label: 'Email',
+          //   value: 'email',
+          // },
         ]}
         onChange={handleChange}
       ></Select>

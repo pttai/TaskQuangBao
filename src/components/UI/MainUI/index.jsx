@@ -14,8 +14,10 @@ import {
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import ListChucVu from '../NhanSu/ChucVu/ListChucVu/ListChucVu';
 import ListHopDong from '../NhanSu/HopDongLaoDong/ListHopDong/ListHopDong';
-import ListDanToc from '../NhanSu/DanToc/ListDanToc/ListDanToc';
-import ListCongTy from '../NhanSu/ThongTinCongTy/ListCongTy/ListCongTy';
+import ListTrinhDo from '../NhanSu/TrinhDo/ListTrinhDo/ListTrinhDo';
+import TabsChamCong from '../NhanSu/ChamCong/TabsChamCong/TabsChamCong';
+import TabsLuong from '../NhanSu/Luong/TabsLuong/TabsLuong';
+import ThongTin from '../ThongTinCongTy/ThongTin/ThongTin';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -124,8 +126,10 @@ class Index extends Component {
               <Route path='/admin/nhan-vien' component={ListStaff} />
               <Route path='/admin/chuc-vu' component={ListChucVu} />
               <Route path='/admin/hop-dong-lao-dong' component={ListHopDong} />
-              <Route path='/admin/dan-toc' component={ListDanToc} />
-              <Route path='/admin/cong-ty' component={ListCongTy} />
+              <Route path='/admin/cham-cong' component={TabsChamCong} />
+              <Route path='/admin/trinh-do' component={ListTrinhDo} />
+              <Route path='/admin/luong' component={TabsLuong} />
+              <Route path='/admin/thong-tin-cong-ty' component={ThongTin} />
             </Switch>
             <Layout>
               <Footer style={{ textAlign: 'center' }}></Footer>

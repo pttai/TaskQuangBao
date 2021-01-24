@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import queryString from 'query-string';
@@ -22,25 +22,31 @@ const validateMessages = {
 };
 
 const EditStaff = (props) => {
+  const { history } = props;
   const { id } = queryString.parse(props.location.search);
-  const { index } = props;
+  const [Ethnicity, setEthnicity] = useState([]);
 
   const onFinish = (values) => {
     const data = {
       ...values,
       ngaysinh: values.ngaysinh.format('YYYY-MM-DD[T00:00:00.000Z]'),
     };
-    console.log(data);
     props.setEditing(true);
     axios({
       method: 'PUT',
       url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/suanhanvien/${id}`,
       data,
-    }).then(() => {
-      props.history.replace('/admin/nhan-vien');
+    }).then((res) => {
+      history.replace('/admin/nhan-vien');
+      props.handleVisible(false);
       props.setEditing(false);
     });
   };
+  useEffect(() => {
+    axios
+      .get('https://quanlyquangbao.herokuapp.com/api/dantoc/danhsachdantoc')
+      .then((res) => setEthnicity(res.data.data));
+  }, []);
 
   return (
     <>
@@ -58,8 +64,8 @@ const EditStaff = (props) => {
         >
           <Form.Item name={'trangthai'} label='Trạng Thái'>
             <Select>
-              <Select.Option value='danghiviec'>Đã nghỉ việc</Select.Option>
-              <Select.Option value='danglamviec'>Đang làm việc</Select.Option>
+              <Select.Option value='Đã nghỉ việc'>Đã nghỉ việc</Select.Option>
+              <Select.Option value='Đang làm việc'>Đang làm việc</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -77,8 +83,19 @@ const EditStaff = (props) => {
           </Form.Item>
           <Form.Item name={'gioitinh'} label='Giới Tính'>
             <Select>
-              <Select.Option value='nam'>Nam</Select.Option>
-              <Select.Option value='nu'>Nữ</Select.Option>
+              <Select.Option value='Nam'>Nam</Select.Option>
+              <Select.Option value='Nữ'>Nữ</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name={'iddantoc'} label='Dân tộc'>
+            <Select>
+              {Ethnicity.map((dantoc) => {
+                return (
+                  <Select.Option key={dantoc._id} value={dantoc._id}>
+                    {dantoc.tendantoc}
+                  </Select.Option>
+                );
+              })}
             </Select>
           </Form.Item>
           <Form.Item name={'sdt'} label='Số Điện Thoại'>

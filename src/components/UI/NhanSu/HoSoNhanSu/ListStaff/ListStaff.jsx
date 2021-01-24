@@ -4,6 +4,7 @@ import { Table, Button, Breadcrumb, notification } from 'antd';
 import {
   DeleteOutlined,
   FormOutlined,
+  LoadingOutlined,
   PlusCircleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -25,21 +26,25 @@ const ListStaff = (props) => {
   const [deleting, setDeleting] = useState(false);
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     axios({
       method: 'GET',
       url: 'https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien',
     }).then((res) => {
+      console.log(res.data);
       const data = [];
-      for (let i = 1; i < res.data.length; i++) {
-        data.push({ ...res.data[i], key: i });
+      for (let i = 0; i < res.data.length; i++) {
+        data.push({ ...res.data[i], key: i + 1 });
       }
 
       setStaffList(data);
       setData(data);
+      setLoading(false);
     });
   }, [deleting, creating, editing]);
-  console.log(staffList);
+  // console.log(staffList);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -107,8 +112,7 @@ const ListStaff = (props) => {
     const toExcel = new ExportJsonExcel(option);
     toExcel.saveExcel();
   };
-
-  const onChange = (e, sorter) => {
+  const onChange = (e) => {
     if (e.target.value.trim().match(/\\/g)) return;
     const keyword = e.target.value.trim();
     if (!keyword) setStaffList(data);
@@ -125,16 +129,16 @@ const ListStaff = (props) => {
         });
         setStaffList(newUserList);
       }
-      if (key === 'email') {
-        const newUserList = data.filter((user) => {
-          if (user.email) {
-            const userName = normalizeVNText(user.email);
-            return userName.match(keywordRegEx);
-          }
-          return false;
-        });
-        setStaffList(newUserList);
-      }
+      // if (key === 'email') {
+      //   const newUserList = data.filter((user) => {
+      //     if (user.email) {
+      //       const userName = normalizeVNText(user.email);
+      //       return userName.match(keywordRegEx);
+      //     }
+      //     return false;
+      //   });
+      //   setStaffList(newUserList);
+      // }
     }
   };
   const handleChange = (value) => {
@@ -155,12 +159,23 @@ const ListStaff = (props) => {
       title: 'Giới Tính',
       dataIndex: 'gioitinh',
       key: 'gioitinh',
+      filters: [
+        {
+          text: 'Nam',
+          value: 'Nam',
+        },
+        {
+          text: 'Nữ',
+          value: 'Nữ',
+        },
+      ],
+      filterMultiple: false,
+      onFilter: (value, record) => record.gioitinh.indexOf(value) === 0,
     },
     {
       title: 'Điện Thoại',
       dataIndex: 'sdt',
       key: 'sdt',
-      sorter: (a, b) => a.sdt - b.sdt,
     },
     {
       title: 'Địa Chỉ',
@@ -181,6 +196,18 @@ const ListStaff = (props) => {
       title: 'Trại Thái',
       dataIndex: 'trangthai',
       key: 'trangthai',
+      filters: [
+        {
+          text: 'Đang làm việc',
+          value: 'Đang làm việc',
+        },
+        {
+          text: 'Đã nghỉ việc',
+          value: 'Đã nghỉ việc',
+        },
+      ],
+      filterMultiple: false,
+      onFilter: (value, record) => record.trangthai.indexOf(value) === 0,
     },
     {
       title: 'Dân Tộc',
@@ -222,6 +249,7 @@ const ListStaff = (props) => {
               {...props}
               index={index}
               visible={editVisible}
+              handleVisible={setEditVisible}
               onOk={handleOkEdit}
               onCancel={handleCancelEdit}
               setEditing={setEditing}
@@ -295,13 +323,16 @@ const ListStaff = (props) => {
       />
 
       <Search onChange={onChange} handleChange={handleChange} />
-      <Table
-        columns={columns}
-        dataSource={staffList} // receive an array
-        style={{ marginTop: 40 }}
-        rowKey={(record) => record._id}
-        onChange={onChange}
-      />
+      {loading ? (
+        <LoadingOutlined />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={staffList} // receive an array
+          style={{ marginTop: 40 }}
+          rowKey={(record) => record._id}
+        />
+      )}
     </div>
   );
 };

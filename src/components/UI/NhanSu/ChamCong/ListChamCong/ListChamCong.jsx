@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Breadcrumb, notification } from 'antd';
+import { Breadcrumb, Button, notification, Table } from 'antd';
+import { Link } from 'react-router-dom';
+
 import {
   DeleteOutlined,
   FormOutlined,
@@ -9,104 +11,93 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 import { normalizeVNText } from '../../../../../utils/normalizeVNText';
-import { Link } from 'react-router-dom';
-import SearchHopDong from '../SearchHopDong/SearchHopDong';
-import AddHopDong from '../AddHopDong/AddHopDong';
-import DetailHopDong from '../DetailHopDong/DetailHopDong';
-import EditHopDong from '../EditHopDong/EditHopDong';
+import AddChamCong from '../AddChamCong/AddChamCong';
+import SearchChamCong from '../SearchChamCong/SearchChamCong';
+import EditChamCong from '../EditChamCong/EditChamCong';
+import DetailChamCong from '../DetailChamCong/DetailChamCong';
 
-const ListHopDong = (props) => {
+const ListChamCong = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
-  const [hopdongList, setHopDongList] = useState([]);
+  const [chamcongList, setChamCongList] = useState([]);
   const [data, setData] = useState([]);
-  const [key, setKey] = useState('loaihopdong');
+  const [key, setKey] = useState('tenca');
+  const [deleting, setDeleting] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axios({
       method: 'GET',
-      url: 'https://quanlyquangbao.herokuapp.com/api/hopdong/danhsachhopdong',
+      url: 'https://quanlyquangbao.herokuapp.com/api/chamcong/danhsachca',
     }).then((res) => {
+      console.log(res.data.data);
       const { data } = res.data;
       const datas = [];
       for (let i = 0; i < data.length; i++) {
+        // data[i].giobatdau = new Intl.DateTimeFormat('default', {
+        //   hour: 'numeric',
+        //   minute: 'numeric',
+        //   second: 'numeric',
+        // }).format(data[i].giobatdau);
         datas.push({ ...data[i], key: i + 1 });
       }
-
-      setHopDongList(datas);
+      setChamCongList(datas);
       setData(datas);
       setLoading(false);
     });
-  }, []);
-  console.log(hopdongList);
+  }, [deleting, creating, editing]);
   const showModal = () => {
     setIsModalVisible(true);
   };
-
   const handleOk = () => {
     setIsModalVisible(false);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    props.history.replace('/admin/hop-dong-lao-dong');
+    // props.history.replace('/admin/cham-cong');
   };
-
   const showModalEdit = () => {
     setEditVisible(true);
   };
-
   const handleOkEdit = () => {
     setEditVisible(false);
   };
-
   const handleCancelEdit = () => {
     setEditVisible(false);
-    props.history.replace('/admin/hop-dong-lao-dong');
+    // props.history.replace('/admin/cham-cong');
   };
-
   const showModalDetail = () => {
     setDetailVisible(true);
   };
-
   const handleOkDetail = () => {
     setDetailVisible(false);
   };
-
   const handleCancelDetail = () => {
     setDetailVisible(false);
-    props.history.replace('/admin/hop-dong-lao-dong');
+    // props.history.replace('/admin/cham-cong');
   };
   const onChange = (e) => {
     if (e.target.value.trim().match(/\\/g)) return;
     const keyword = e.target.value.trim();
-    if (!keyword) setHopDongList(data);
+    if (!keyword) setChamCongList(data);
     else {
       const normalInput = normalizeVNText(keyword);
       const keywordRegEx = new RegExp(normalInput, 'gi');
-      if (key === 'loaihopdong') {
-        const newHopDongList = data.filter((hopdong) => {
-          if (hopdong.loaihopdong) {
-            const hopdongName = normalizeVNText(hopdong.loaihopdong);
-            return hopdongName.match(keywordRegEx);
+      if (key === 'tenca') {
+        const newChamCongList = data.filter((chamcong) => {
+          if (chamcong.tenca) {
+            const chamcongName = normalizeVNText(chamcong.tenca);
+            return chamcongName.match(keywordRegEx);
           }
           return false;
         });
-        setHopDongList(newHopDongList);
+        setChamCongList(newChamCongList);
       }
-      // if (key === 'email') {
-      //   const newhopdongList = data.filter((user) => {
-      //     if (user.email) {
-      //       const userName = normalizeVNText(user.email);
-      //       return userName.match(keywordRegEx);
-      //     }
-      //     return false;
-      //   });
-      //   setHopDongList(newUserList);
-      // }
     }
   };
   const handleChange = (value) => {
@@ -119,30 +110,29 @@ const ListHopDong = (props) => {
       key: 'key',
     },
     {
-      title: 'Loại Hợp Đồng',
-      dataIndex: 'loaihopdong',
-      key: 'loaihopdong',
+      title: 'Tên Ca',
+      dataIndex: 'tenca',
+      key: 'tenca',
     },
     {
-      title: 'Ngày Bắt Đầu',
-      dataIndex: 'ngaybatdau',
-      key: 'ngaybatdau',
+      title: 'Giờ Bắt Đầu',
+      dataIndex: 'giobatdau',
+      key: 'giobatdau',
     },
     {
-      title: 'Ngày Kết Thúc',
-      dataIndex: 'ngayketthuc',
-      key: 'ngayketthuc',
+      title: 'Giờ Kết Thúc',
+      dataIndex: 'gioketthuc',
+      key: 'gioketthuc',
     },
     {
-      title: 'Nội Dung Hợp Đồng',
-      dataIndex: 'noidung',
-      key: 'noidung',
+      title: 'Bắt Đầu Nghỉ Giữa Ca',
+      dataIndex: 'batdaunghigiuaca',
+      key: 'batdaunghigiuaca',
     },
-
     {
-      title: 'Tên Doanh Nghiệp',
-      dataIndex: ['idcongty', 'tendoanhnghiep'],
-      key: ['idcongty', 'tendoanhnghiep'],
+      title: 'Kết Thúc Nghỉ Giữa Ca',
+      dataIndex: 'ketthucnghigiuaca',
+      key: 'ketthucnghigiuaca',
     },
     {
       title: 'Tùy Chỉnh',
@@ -152,9 +142,7 @@ const ListHopDong = (props) => {
       render: (_, record, index) => {
         return (
           <div style={{ width: 120 }}>
-            {/* <Link
-              to={`/admin/hop-dong-lao-dong/thong-tin-hop-dong?id=${record._id}`}
-            >
+            <Link to={`/admin/cham-cong/thong-tin-cham-cong?id=${record._id}`}>
               <Button
                 type='primary'
                 style={{ borderRadius: 7, marginRight: 5 }}
@@ -162,16 +150,14 @@ const ListHopDong = (props) => {
                 onClick={showModalDetail}
               />
             </Link>
-            <DetailHopDong
+            <DetailChamCong
               {...props}
               index={index}
               visible={detailVisible}
               onOk={handleOkDetail}
               onCancel={handleCancelDetail}
-            /> */}
-            <Link
-              to={`/admin/hop-dong-lao-dong/chinh-sua-hop-dong?id=${record._id}`}
-            >
+            />
+            <Link to={`/admin/cham-cong/chinh-sua-cham-cong?id=${record._id}`}>
               <Button
                 type='primary'
                 style={{ borderRadius: 7 }}
@@ -179,34 +165,39 @@ const ListHopDong = (props) => {
                 onClick={showModalEdit}
               />
             </Link>
-            <EditHopDong
+            <EditChamCong
               {...props}
               index={index}
               visible={editVisible}
+              handleVisible={setEditVisible}
               onOk={handleOkEdit}
               onCancel={handleCancelEdit}
+              setEditing={setEditing}
             />
             <Button
               type='danger'
               style={{ borderRadius: 7, marginRight: 5, marginLeft: 5 }}
               icon={<DeleteOutlined />}
               onClick={() => {
+                setDeleting(true);
                 axios({
                   method: 'DELETE',
-                  url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/xoanhanvien?id=${record._id}`,
+                  url: `https://quanlyquangbao.herokuapp.com/api/chamcong/xoamotca?id=${record._id}`,
                 })
-                  .then(() =>
+                  .then(() => {
                     notification.success({
                       duration: 4,
                       message: 'XÓA THÀNH CÔNG',
-                    })
-                  )
-                  .catch(() =>
+                    });
+                    setDeleting(false);
+                  })
+                  .catch(() => {
                     notification.error({
                       duration: 4,
                       message: 'XÓA THẤT BẠI',
-                    })
-                  );
+                    });
+                    setDeleting(false);
+                  });
               }}
             />
           </div>
@@ -218,7 +209,7 @@ const ListHopDong = (props) => {
     <div>
       <Breadcrumb style={{ margin: '16px 0', fontSize: 20 }}>
         <Breadcrumb.Item>Nhân Sự</Breadcrumb.Item>
-        <Breadcrumb.Item>Hợp Đồng Lao Động</Breadcrumb.Item>
+        <Breadcrumb.Item>Chấm Công</Breadcrumb.Item>
       </Breadcrumb>
       <Button
         tyle='primary'
@@ -231,36 +222,37 @@ const ListHopDong = (props) => {
       >
         Xuất File
       </Button>
-      <Link to='/admin/hop-dong-lao-dong/them-hop-dong'>
+      <Link to='/admin/cham-cong/them-cham-cong'>
         <Button
           type='primary'
           style={{ borderRadius: 7 }}
           icon={<PlusCircleOutlined />}
           onClick={showModal}
         >
-          Thêm Hợp Đồng
+          Thêm Chấm Công
         </Button>
       </Link>
-      <AddHopDong
+      <AddChamCong
         {...props}
         visible={isModalVisible}
         handleVisible={setIsModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        setCreating={setCreating}
       />
-
-      <SearchHopDong onChange={onChange} handleChange={handleChange} />
+      <SearchChamCong onChange={onChange} handleChange={handleChange} />
       {loading ? (
         <LoadingOutlined />
       ) : (
         <Table
           columns={columns}
-          dataSource={hopdongList} // receive an array
           style={{ marginTop: 40 }}
           rowKey={(record) => record._id}
+          dataSource={chamcongList}
         />
       )}
     </div>
   );
 };
-export default ListHopDong;
+
+export default ListChamCong;

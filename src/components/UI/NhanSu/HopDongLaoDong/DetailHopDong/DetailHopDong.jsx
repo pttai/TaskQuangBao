@@ -1,4 +1,4 @@
-import { Modal, Row, Col, notification, Typography } from 'antd';
+import { Modal, Row, Col, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import axios from 'axios';

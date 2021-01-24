@@ -3,21 +3,21 @@ import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import axios from 'axios';
 const DetailChucVu = (props) => {
-  const { id } = queryString.parse(props.location.search);
+  const id = queryString.parse(props.location?.search?.id);
   const [chucvuDetail, setChucVuDetail] = useState({});
 
-  useEffect(() => {
-    if (id) {
-      axios({
-        method: 'GET',
-        url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien/${id}`,
-      }).then((res) => {
-        if (res.data?.data) {
-          setChucVuDetail(res.data?.data[0]);
-        }
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (id) {
+  //     axios({
+  //       method: 'GET',
+  //       url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien/${id}`,
+  //     }).then((res) => {
+  //       if (res.data?.data) {
+  //         setChucVuDetail(res.data?.data[0]);
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   return (
     <>

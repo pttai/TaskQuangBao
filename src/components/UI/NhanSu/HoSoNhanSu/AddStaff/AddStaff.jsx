@@ -11,7 +11,7 @@ const layout = {
   },
 };
 const validateMessages = {
-  required: '${label} is required!',
+  required: '${label} không được để trống!',
   types: {
     email: '${label} is not a valid email!',
     number: '${label} is not a valid number!',
@@ -71,8 +71,8 @@ const AddStaff = (props) => {
           </Form.Item>
           <Form.Item name={'trangthai'} label='Trạng Thái'>
             <Select>
-              <Select.Option value='danghiviec'>Đã nghỉ việc</Select.Option>
-              <Select.Option value='danglamviec'>Đang làm việc</Select.Option>
+              <Select.Option value='Đã nghỉ việc'>Đã nghỉ việc</Select.Option>
+              <Select.Option value='Đang làm việc'>Đang làm việc</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -83,15 +83,13 @@ const AddStaff = (props) => {
                 required: true,
               },
             ]}
-            // value={this.state.name}
-            // onChange={this.onChange}
           >
             <Input />
           </Form.Item>
           <Form.Item name={'gioitinh'} label='Giới Tính'>
             <Select>
-              <Select.Option value='nam'>Nam</Select.Option>
-              <Select.Option value='nu'>Nữ</Select.Option>
+              <Select.Option value='Nam'>Nam</Select.Option>
+              <Select.Option value='Nữ'>Nữ</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item name={'iddantoc'} label='Dân tộc'>

@@ -1,32 +1,33 @@
-import { Modal, Row, Col, notification, Typography } from 'antd';
+import { Modal, Row, Col, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import axios from 'axios';
 import { LoadingOutlined } from '@ant-design/icons';
-const DetailStaff = (props) => {
+const DetailChamCong = (props) => {
   const id = queryString.parse(props.location?.search)?.id;
   const [loading, setLoading] = useState(false);
-  const [userDetail, setUserDetail] = useState({});
+  const [chamcongDetail, setChamCongDetail] = useState({});
+
   useEffect(() => {
     if (id) {
       setLoading(true);
       axios({
         method: 'GET',
-        url: `https://quanlyquangbao.herokuapp.com/api/nhanvien/danhsachnhanvien/${id}`,
+        url: `https://quanlyquangbao.herokuapp.com/api/chamcong/laymotca/${id}`,
       }).then((res) => {
-        if (res.data?.success) {
-          setUserDetail(res.data.success);
+        console.log(res.data);
+        if (res.data?.data) {
+          setChamCongDetail(res.data.data);
           setLoading(false);
         }
       });
     }
   }, [id]);
-  console.log(userDetail);
 
   return (
     <>
       <Modal
-        title='Thông tin Nhân Viên'
+        title='Thông tin Ca'
         visible={props.visible}
         onOk={props.onOk}
         onCancel={props.onCancel}
@@ -39,11 +40,11 @@ const DetailStaff = (props) => {
             <Col span={24}>
               <Row>
                 <Col span={5}>
-                  <Typography.Text>Họ và tên:</Typography.Text>
+                  <Typography.Text>Tên Ca:</Typography.Text>
                 </Col>
                 <Col span={19}>
                   <Typography.Paragraph>
-                    {userDetail[0]?.tennhanvien}
+                    {chamcongDetail[0]?.tenca}
                   </Typography.Paragraph>
                 </Col>
               </Row>
@@ -51,11 +52,11 @@ const DetailStaff = (props) => {
             <Col span={24}>
               <Row>
                 <Col span={5}>
-                  <Typography.Text>Giới tính:</Typography.Text>
+                  <Typography.Text>Giờ Bắt Đầu:</Typography.Text>
                 </Col>
                 <Col span={19}>
                   <Typography.Paragraph>
-                    {userDetail[0]?.gioitinh}
+                    {chamcongDetail[0]?.giobatdau}
                   </Typography.Paragraph>
                 </Col>
               </Row>
@@ -63,11 +64,11 @@ const DetailStaff = (props) => {
             <Col span={24}>
               <Row>
                 <Col span={5}>
-                  <Typography.Text>Số điện thoại:</Typography.Text>
+                  <Typography.Text>Giờ Kết Thúc:</Typography.Text>
                 </Col>
                 <Col span={19}>
                   <Typography.Paragraph>
-                    {userDetail[0]?.sdt}
+                    {chamcongDetail[0]?.gioketthuc}
                   </Typography.Paragraph>
                 </Col>
               </Row>
@@ -75,11 +76,11 @@ const DetailStaff = (props) => {
             <Col span={24}>
               <Row>
                 <Col span={5}>
-                  <Typography.Text>Email:</Typography.Text>
+                  <Typography.Text>Bắt Đầu Nghỉ Giữa Ca:</Typography.Text>
                 </Col>
                 <Col span={19}>
                   <Typography.Paragraph>
-                    {userDetail[0]?.email}
+                    {chamcongDetail[0]?.batdaunghigiuaca}
                   </Typography.Paragraph>
                 </Col>
               </Row>
@@ -87,23 +88,11 @@ const DetailStaff = (props) => {
             <Col span={24}>
               <Row>
                 <Col span={5}>
-                  <Typography.Text>Ngày sinh:</Typography.Text>
+                  <Typography.Text>Kết Thúc Nghỉ Giữa Ca:</Typography.Text>
                 </Col>
                 <Col span={19}>
                   <Typography.Paragraph>
-                    {userDetail[0]?.ngaysinh}
-                  </Typography.Paragraph>
-                </Col>
-              </Row>
-            </Col>
-            <Col span={24}>
-              <Row>
-                <Col span={5}>
-                  <Typography.Text>Quê quán:</Typography.Text>
-                </Col>
-                <Col span={19}>
-                  <Typography.Paragraph>
-                    {userDetail[0]?.quequan}
+                    {chamcongDetail[0]?.ketthucnghigiuaca}
                   </Typography.Paragraph>
                 </Col>
               </Row>
@@ -115,4 +104,4 @@ const DetailStaff = (props) => {
   );
 };
 
-export default DetailStaff;
+export default DetailChamCong;

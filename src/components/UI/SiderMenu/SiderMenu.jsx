@@ -4,6 +4,7 @@ import './SiderMenu.scss';
 import {
   DesktopOutlined,
   FileOutlined,
+  InfoOutlined,
   PieChartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -40,7 +41,6 @@ const SiderMenu = (props) => {
         </Link>
       </Menu.Item>
       <SubMenu key='sub2' icon={<DesktopOutlined />} title='Sản Xuất'>
-        <Menu.Item key='7'>Mặt Hàng</Menu.Item>
         <Menu.Item key='8'>Đối Tác,Khách Hàng</Menu.Item>
         <Menu.Item key='9'>Nhà Cung Cấp</Menu.Item>
         <Menu.Item key='10'>Thiết Bị</Menu.Item>
@@ -64,10 +64,13 @@ const SiderMenu = (props) => {
           <Link to='/admin/hop-dong-lao-dong'>Hợp Đồng Lao Động</Link>
         </Menu.Item>
         <Menu.Item key='4'>
-          <Link to='/admin/dan-toc'>Dân Tộc</Link>
+          <Link to='/admin/cham-cong'>Chấm Công</Link>
         </Menu.Item>
-        <Menu.Item key='5'>
-          <Link to='/admin/cong-ty'>Công Ty</Link>
+        <Menu.Item key='6'>
+          <Link to='/admin/trinh-do'>Trình Độ</Link>
+        </Menu.Item>
+        <Menu.Item key='7'>
+          <Link to='/admin/luong'>Lương</Link>
         </Menu.Item>
       </SubMenu>
       <SubMenu key='sub3' icon={<UserOutlined />} title='User'>
@@ -77,6 +80,9 @@ const SiderMenu = (props) => {
       </SubMenu>
       <Menu.Item key='17' icon={<FileOutlined />}>
         Thống Kê
+      </Menu.Item>
+      <Menu.Item key='18' icon={<InfoOutlined />}>
+        <Link to='/admin/thong-tin-cong-ty'>Thông Tin Công Ty</Link>
       </Menu.Item>
     </Menu>
   );

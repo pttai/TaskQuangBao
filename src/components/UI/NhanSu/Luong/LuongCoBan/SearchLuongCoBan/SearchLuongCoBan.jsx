@@ -1,20 +1,20 @@
 import React from 'react';
-import './SearchChucVu.scss';
+import './SearchLuongCoBan.scss';
 import { Input, Select } from 'antd';
 
-const SearchBac = ({ onChange, handleChange }) => {
+const SearchLuongCoBan = ({ onChange, handleChange }) => {
   return (
     <>
       <Select
         labelInValue
-        defaultValue={{ value: 'tenchucvu' }}
+        defaultValue={{ value: 'vung' }}
         style={{ width: 150, marginLeft: 100, height: 40 }}
         className='ant-select-selector'
         options={[
           {
             id: '1',
-            label: 'Tên Chức Vụ',
-            value: 'tenchucvu',
+            label: 'Vùng',
+            value: 'vung',
           },
         ]}
         onChange={handleChange}
@@ -28,4 +28,4 @@ const SearchBac = ({ onChange, handleChange }) => {
     </>
   );
 };
-export default SearchBac;
+export default SearchLuongCoBan;

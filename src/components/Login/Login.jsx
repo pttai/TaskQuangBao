@@ -45,7 +45,6 @@ const Login = (props) => {
           message: 'Sai thông tin đăng nhập',
         });
         console.log(error);
-        history.replace('/admin');
       });
   };
   return (
